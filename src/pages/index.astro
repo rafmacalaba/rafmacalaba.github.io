@@ -53,50 +53,56 @@ if (profile.html_url && !contactLinks.some((c) => c.href === profile.html_url)) 
     )}
   </section>
 
-  <section class="section">
-    <header class="section-header">
-      <h2 class="section-title">Selected work</h2>
-      <a class="section-link" href="/work">All work &rarr;</a>
-    </header>
-    <div class="project-grid">
-      {featured.map((p) => (
-        <ProjectCard
-          title={p.data.title}
-          domain={p.data.domain}
-          year={p.data.year}
-          summary={p.data.summary}
-          links={p.data.links}
-          slug={p.slug}
-        />
-      ))}
-    </div>
-  </section>
+  {featured.length > 0 && (
+    <section class="section">
+      <header class="section-header">
+        <h2 class="section-title">Selected work</h2>
+        <a class="section-link" href="/work">All work &rarr;</a>
+      </header>
+      <div class="project-grid">
+        {featured.map((p) => (
+          <ProjectCard
+            title={p.data.title}
+            domain={p.data.domain}
+            year={p.data.year}
+            summary={p.data.summary}
+            links={p.data.links}
+            slug={p.slug}
+          />
+        ))}
+      </div>
+    </section>
+  )}
 
-  <section class="section">
-    <header class="section-header">
-      <h2 class="section-title">Recent writing</h2>
-      <a class="section-link" href="/writing">All writing &rarr;</a>
-    </header>
-    <div class="post-list">
-      {recentPosts.map((p) => (
-        <PostCard
-          title={p.data.title}
-          description={p.data.description}
-          pubDate={p.data.pubDate}
-          href={`/blog/${p.slug}`}
-        />
-      ))}
-    </div>
-  </section>
+  {recentPosts.length > 0 && (
+    <section class="section">
+      <header class="section-header">
+        <h2 class="section-title">Recent writing</h2>
+        <a class="section-link" href="/writing">All writing &rarr;</a>
+      </header>
+      <div class="post-list">
+        {recentPosts.map((p) => (
+          <PostCard
+            title={p.data.title}
+            description={p.data.description}
+            pubDate={p.data.pubDate}
+            href={`/blog/${p.slug}`}
+          />
+        ))}
+      </div>
+    </section>
+  )}
 
   {now && <NowPullQuote excerpt={nowExcerpt} />}
 
-  <section class="section">
-    <h2 class="section-title">Contact</h2>
-    <ul class="contact-list">
-      {contactLinks.map((link) => (
-        <li><a href={link.href} rel="noopener noreferrer">{link.label}</a></li>
-      ))}
-    </ul>
-  </section>
+  {contactLinks.length > 0 && (
+    <section class="section">
+      <h2 class="section-title">Contact</h2>
+      <ul class="contact-list">
+        {contactLinks.map((link) => (
+          <li><a href={link.href} rel="noopener noreferrer">{link.label}</a></li>
+        ))}
+      </ul>
+    </section>
+  )}
 </BaseLayout>

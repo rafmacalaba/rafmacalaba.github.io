@@ -24,8 +24,8 @@ describe("RSS feed", () => {
   it("emits one <item> per published post", () => {
     if (!existsSync(DIST_RSS)) return;
     const items = xml.match(/<item>/g) ?? [];
-    // We seeded 3 published + 1 draft = 4 blog posts; drafts excluded.
-    assert.equal(items.length, 3);
+    // 0 blog posts = 0 feed items
+    assert.equal(items.length, 0);
   });
 
   it("items include title, description, pubDate, link", () => {
@@ -55,7 +55,7 @@ describe("RSS feed", () => {
   it("feed channel has title and description", () => {
     if (!existsSync(DIST_RSS)) return;
     assert.ok(/<title>/.test(xml), "channel must contain <title>");
-    assert.ok(/<description>/.test(xml), "channel must contain <description>");
+    assert.ok(/<description/.test(xml), "channel must contain <description> element");
   });
 });
 

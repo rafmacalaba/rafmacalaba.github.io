@@ -10,8 +10,7 @@ export interface ContactLink {
 
 export const siteConfig = {
   name: "Rafael Macalaba",
-  tagline:
-    "Researcher and engineer working at the intersection of data, policy, and applied systems.",
+  tagline: "",
   url: "https://rafmacalaba.github.io",
   navLinks: [
     { label: "Home", href: "/" },
@@ -20,10 +19,7 @@ export const siteConfig = {
     { label: "About", href: "/about" },
     { label: "Now", href: "/now" },
   ] satisfies NavLink[],
-  contactLinks: [
-    { label: "Email", href: "mailto:rafael@example.com" },
-    { label: "GitHub", href: "https://github.com/rafmacalaba" },
-  ] satisfies ContactLink[],
+  contactLinks: [] as ContactLink[],
   copyrightYear: new Date().getFullYear(),
 } as const;
 
