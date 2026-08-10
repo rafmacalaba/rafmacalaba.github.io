@@ -1,10 +1,20 @@
 # Contract: portfolio-redesign
 
-Status: APPROVED
+Status: APPROVED (amended 2026-08-10 — empty content, light default theme)
 Commodore: opencode-go/minimax-m3
 Stack: Astro 5 + TypeScript, GitHub Pages, content collections (markdown)
 Base branch: main
 Lane branch: feat/portfolio-redesign
+
+## Amendment 2026-08-10
+
+Owner will fill in real content later, section by section (Work, Writing,
+About). All seed/example content is removed from the contract. Pages must
+render an honest empty state until the owner commits real markdown. Default
+theme is **light** (not "system"), matching quiet modernist intent.
+
+**Removed:** seed requirement for 3 blog posts + 3 projects + 1 now doc.
+**Added:** light default theme, empty-state UX on every section page.
 
 ## Goal
 
@@ -27,7 +37,8 @@ Reference design: `docs/superpowers/specs/2026-08-10-portfolio-redesign-design.m
       (self-hosted, no external runtime); place under `src/styles/` and import
       from `global.css`
 - [ ] `src/components/ThemeToggle.astro` — unchanged behavior; accent token
-      verified in both themes
+      verified in both themes. Default theme = **light** (not "system").
+      `BaseLayout` inline script must default to light when no stored pref.
 - [ ] `src/components/SiteNav.astro` (new) — sticky top bar, wordmark left,
       nav links right, theme toggle end, no hamburger
 - [ ] `src/components/SiteFooter.astro` (new) — quiet footer, contact links,
@@ -50,8 +61,9 @@ Reference design: `docs/superpowers/specs/2026-08-10-portfolio-redesign-design.m
 - [ ] `tests/schema.test.ts` — extend with positive + negative cases for each
       new schema
 - [ ] Remove `src/content/highlights.json` and `src/lib/highlights.ts`
-- [ ] Seed: 3 example blog posts under `src/content/blog/`, 3 example projects
-      under `src/content/projects/`, 1 `now.md` document
+- [ ] **No seed content** (amended 2026-08-10). `src/content/blog/`,
+      `src/content/projects/`, and `src/content/now.md` start empty; owner
+      adds real content section by section
 - [ ] `src/lib/content.ts` (new) — typed accessors: `getPublishedPosts()`,
       `getFeaturedProjects()`, `getProjects({ domain? })`, `getNow()`
 
@@ -65,11 +77,18 @@ Reference design: `docs/superpowers/specs/2026-08-10-portfolio-redesign-design.m
 
 - [ ] `src/pages/index.astro` — story-led: hero (name, role, 1-line positioning),
       Selected work (3-4 featured), Recent writing (3 latest), Now pull-quote,
-      contact
-- [ ] `src/pages/work.astro` — heading + filter chips + narrative cards
-- [ ] `src/pages/writing.astro` — blog index, reverse chronological
-- [ ] `src/pages/about.astro` — long bio + career timeline + skills
-- [ ] `src/pages/now.astro` — single doc page, no nav/footer chrome
+      contact. Sections with empty collections render an honest empty state,
+      not "no items found" — sections themselves are omitted until owner adds
+      content
+- [ ] `src/pages/work.astro` — heading + filter chips + narrative cards.
+      Empty state shown when no projects
+- [ ] `src/pages/writing.astro` — blog index, reverse chronological.
+      Empty state shown when no posts
+- [ ] `src/pages/about.astro` — owner-fillable structure (bio + career
+      timeline + skills). Starts empty (no fake bio, no fake timeline, no
+      fake skills); owner fills in via Astro frontmatter over time
+- [ ] `src/pages/now.astro` — single doc page, no nav/footer chrome. Already
+      handles missing now.md gracefully ("No updates yet.")
 - [ ] Delete `src/pages/projects.astro` and `src/pages/highlights.astro`
 - [ ] Filter chips on `/work`: client-side JS, no URL state, `aria-pressed`
 - [ ] `src/scripts/filter.ts` (new) — chip toggling, ~20 lines, no framework
@@ -80,11 +99,14 @@ Reference design: `docs/superpowers/specs/2026-08-10-portfolio-redesign-design.m
 - [ ] `src/styles/global.css` — extend with page-specific layouts (no clutter)
 
 **Success criteria:**
-- [ ] All 5 pages render with seed content
+- [ ] All 5 pages render; sections without owner content show empty state
+      (not broken layout, not fake content)
 - [ ] Work filter chips toggle cards without page reload (manual + screenshot)
-- [ ] Now page renders without nav/footer
+- [ ] Now page renders without nav/footer, shows "No updates yet." when now.md
+      is absent
 - [ ] Mobile (375px) + desktop (1280px) screenshots for all 5 pages under
-      `armada/screenshots/portfolio-redesign/`
+      `armada/screenshots/portfolio-redesign/`, each in empty state
+- [ ] Theme defaults to **light** on first visit (no localStorage entry)
 
 ### Phase 4 — Blog subsystem (depends on Phase 3)
 
