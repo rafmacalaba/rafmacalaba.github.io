@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+
+const entries = await getCollection("now");
+const now = entries[0];
+const Content = now ? (await render(now)).Content : null;
+const updatedLabel = now
+  ? now.data.updated.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    })
+  : "";
+---
+
+<BaseLayout title="Now" description="What I am focused on right now." chrome={false}>
+  <article class="now-page">
+    <h1>Now</h1>
+    {now && <p class="now-updated">Updated {updatedLabel}</p>}
+    {Content ? <Content /> : <p>No updates yet.</p>}
+  </article>
+</BaseLayout>

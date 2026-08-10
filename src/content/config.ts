@@ -1,19 +1,20 @@
 import { defineCollection } from "astro:content";
-import { file } from "astro/loaders";
-import { highlightSchema } from "./schema";
+import { glob } from "astro/loaders";
+import { blogSchema, projectsSchema, nowSchema } from "./schema.ts";
 
-const highlights = defineCollection({
-  loader: file("src/content/highlights.json", {
-    parser: (text) => {
-      const entries = JSON.parse(text);
-      if (!Array.isArray(entries)) throw new Error("highlights.json must be an array");
-      return entries.map((entry) => ({
-        ...entry,
-        id: entry.url,
-      }));
-    },
-  }),
-  schema: highlightSchema,
+const blog = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
+  schema: blogSchema,
 });
 
-export const collections = { highlights };
+const projects = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
+  schema: projectsSchema,
+});
+
+const now = defineCollection({
+  loader: glob({ pattern: "now.md", base: "./src/content" }),
+  schema: nowSchema,
+});
+
+export const collections = { blog, projects, now };

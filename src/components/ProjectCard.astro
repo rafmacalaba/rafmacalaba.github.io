@@ -1,0 +1,31 @@
+---
+import type { ProjectFrontmatter } from "../content/schema.ts";
+
+interface Props {
+  title: string;
+  domain: ProjectFrontmatter["domain"];
+  year: number;
+  summary: string;
+  links: ProjectFrontmatter["links"];
+  slug?: string;
+}
+
+const { title, domain, year, summary, links, slug } = Astro.props;
+---
+
+<article class="project-card" data-domain={domain}>
+  <header class="project-card-header">
+    <h3 class="project-card-title">
+      {slug ? <a href={`/work#${slug}`}>{title}</a> : title}
+    </h3>
+    <span class="project-card-meta">{domain} &middot; {year}</span>
+  </header>
+  <p class="project-card-summary">{summary}</p>
+  <ul class="project-card-links">
+    {links.map((link) => (
+      <li>
+        <a href={link.url} rel="noopener noreferrer">{link.label}</a>
+      </li>
+    ))}
+  </ul>
+</article>
