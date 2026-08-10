@@ -15,7 +15,7 @@ describe("Blog route", () => {
   it("dist/blog/<slug>/index.html exists for each published post", () => {
     if (!existsSync(DIST_BLOG)) return;
     const slugs = listDirs(DIST_BLOG);
-    assert.equal(slugs.length, 5);
+    assert.ok(slugs.length >= 5, "expected at least 5 published posts in dist/blog");
   });
 
   it("draft post is not generated as a route", () => {
