@@ -1,0 +1,67 @@
+[
+  {
+    "name": "synthetic-data-toolkit",
+    "full_name": "rafmacalaba/synthetic-data-toolkit",
+    "description": "Toolkit for generating synthetic datasets for development research",
+    "html_url": "https://github.com/rafmacalaba/synthetic-data-toolkit",
+    "stargazers_count": 28,
+    "forks_count": 5,
+    "language": "Python",
+    "topics": ["synthetic-data", "machine-learning"],
+    "updated_at": "2025-08-01T12:00:00Z",
+    "archived": false,
+    "fork": false
+  },
+  {
+    "name": "dataset-mention-monitor",
+    "full_name": "rafmacalaba/dataset-mention-monitor",
+    "description": "Monitor research papers for dataset mentions using LLMs",
+    "html_url": "https://github.com/rafmacalaba/dataset-mention-monitor",
+    "stargazers_count": 15,
+    "forks_count": 3,
+    "language": "Python",
+    "topics": ["nlp", "llm", "research"],
+    "updated_at": "2025-07-15T09:30:00Z",
+    "archived": false,
+    "fork": false
+  },
+  {
+    "name": "world-bank-data-utils",
+    "full_name": "rafmacalaba/world-bank-data-utils",
+    "description": "Utility library for working with World Bank open data APIs",
+    "html_url": "https://github.com/rafmacalaba/world-bank-data-utils",
+    "stargazers_count": 42,
+    "forks_count": 12,
+    "language": "TypeScript",
+    "topics": ["world-bank", "open-data", "api"],
+    "updated_at": "2025-06-20T14:00:00Z",
+    "archived": false,
+    "fork": false
+  },
+  {
+    "name": "privacy-ml-framework",
+    "full_name": "rafmacalaba/privacy-ml-framework",
+    "description": "Privacy-preserving machine learning framework for sensitive data",
+    "html_url": "https://github.com/rafmacalaba/privacy-ml-framework",
+    "stargazers_count": 10,
+    "forks_count": 2,
+    "language": "Python",
+    "topics": ["privacy", "machine-learning", "differential-privacy"],
+    "updated_at": "2025-05-10T08:00:00Z",
+    "archived": false,
+    "fork": false
+  },
+  {
+    "name": "old-archived-project",
+    "full_name": "rafmacalaba/old-archived-project",
+    "description": "Legacy project no longer maintained",
+    "html_url": "https://github.com/rafmacalaba/old-archived-project",
+    "stargazers_count": 3,
+    "forks_count": 1,
+    "language": "R",
+    "topics": ["legacy"],
+    "updated_at": "2024-01-01T00:00:00Z",
+    "archived": true,
+    "fork": false
+  }
+]

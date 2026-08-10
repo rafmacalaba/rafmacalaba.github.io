@@ -3,3 +3,20 @@
 /.opencode/
 /opencode.json
 # armada:end
+
+# Dependencies
+node_modules/
+
+# Build
+dist/
+
+# Astro
+.astro/
+
+# Env
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store

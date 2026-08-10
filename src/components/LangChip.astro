@@ -1,0 +1,8 @@
+---
+interface Props {
+  language: string | null;
+}
+const { language } = Astro.props;
+---
+
+<span class="lang-chip">{language ?? "Unknown"}</span>
