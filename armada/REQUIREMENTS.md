@@ -175,3 +175,86 @@ Font addition is a build-time dependency.
   projects filtered out or rejected by schema
 - Fonts: `@fontsource-variable/inter` + `@fontsource-variable/newsreader`,
   npm packages, bundled at build time
+
+---
+
+# Post-ship: portfolio-content-2026-08 (DRAFT — pending owner approval)
+
+This is an addition to the merged `portfolio-redesign` contract. It is not a
+new feature; it is the first real content pass the parent contract's amendment
+reserved ("Owner will fill in real content later, section by section").
+
+Status: DRAFT (pending owner approval)
+Lane branch: `feat/portfolio-content-2026-08`
+
+## Scope (in)
+
+- `src/content/projects/armada.md` (new) — Work entry for
+  https://github.com/rafmacalaba/armada, domain `engineering`, `featured: true`
+- `src/content/blog/armada-intro.md` (new) — first blog post about armada
+- `src/content/now.md` (new) — five-thread narrative (see below)
+- `src/pages/index.astro` — section title "Selected work" -> "Highlights"
+- `src/pages/writing.astro` — drop the "Essays and field notes, reverse
+  chronological. Subscribe via RSS." paragraph. RSS link stays on the page
+  only if useful elsewhere; default is to remove it with the paragraph.
+
+## Scope (out)
+
+- No design, schema, layout, component, or theme changes
+- No new pages or routes
+- No new dependencies
+- No About-page bio / timeline fill
+- No removal of `README.md` highlights reference
+
+## Now narrative — five threads (owner-chosen)
+
+1. Semantic Search, Embeddings and rerankers
+2. Information Retrieval
+3. Agentic Engineering (armada)
+4. Infrastructure, scalable solutions
+5. Open source solutions for development data
+
+Tone: flowing paragraph, not a bullet list. Each thread woven naturally.
+
+## Phases (single phase, no deps)
+
+- Create the three content files (parallel-safe, disjoint files)
+- Edit `src/pages/index.astro` heading text
+- Edit `src/pages/writing.astro` to drop the essay blurb
+- Build + check + tests pass
+- Screenshot evidence in `armada/screenshots/portfolio-content-2026-08/`
+- PR opened against `main` from `feat/portfolio-content-2026-08`
+
+All prose drafts are reviewed by owner before merge. Armada blog + Now
+narrative are drafted by commodore in the voyage lane.
+
+## Success criteria
+
+- [ ] `src/content/projects/armada.md` exists; armada appears under Featured
+      on `/` (Home)
+- [ ] `src/content/blog/armada-intro.md` exists; appears on `/writing` and
+      `/rss.xml`
+- [ ] `src/content/now.md` exists; rendered on `/` (pull quote) and `/now`
+- [ ] `src/pages/index.astro` home section heading reads "Highlights"
+- [ ] `src/pages/writing.astro` no longer contains "Essays and field notes,
+      reverse chronological." paragraph
+- [ ] `npm run build` succeeds
+- [ ] `npm run check` 0 errors
+- [ ] Existing tests still pass (no regressions)
+- [ ] Screenshots: Home ("Highlights" + armada card), `/writing` (one
+      post), `/now` (five-thread narrative), `/work` (armada entry) under
+      `armada/screenshots/portfolio-content-2026-08/`
+- [ ] PR open against `main`
+
+## Risk
+
+Low. Content-only edits on a deployed static site. No schema, route, or
+design changes. Build / test regressions are the only realistic failure
+mode.
+
+## Owner review gates
+
+- Before merge: review prose drafts in `src/content/blog/armada-intro.md`
+  and `src/content/now.md`, edit as needed.
+- Before merge: confirm "Selected work" -> "Highlights" rename reads right
+  in context on `/`.
