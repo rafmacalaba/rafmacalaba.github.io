@@ -8,11 +8,15 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "test": "node --experimental-strip-types --test tests/schema.test.ts tests/github.test.ts tests/xss-escape.test.ts"
+    "test": "node --experimental-strip-types --test tests/schema.test.ts tests/github.test.ts tests/xss-escape.test.ts tests/rss.test.ts tests/blog.test.ts"
   },
   "dependencies": {
+    "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/newsreader": "^5.3.0",
     "astro": "^5.18.2",
+    "gray-matter": "^4.0.3",
     "zod": "^3.25.76"
   },
   "devDependencies": {

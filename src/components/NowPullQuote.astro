@@ -1,0 +1,18 @@
+---
+interface Props {
+  excerpt: string;
+  href?: string;
+}
+
+const { excerpt, href = "/now" } = Astro.props;
+---
+
+<aside class="now-pull-quote">
+  <p class="now-pull-quote-label">Now</p>
+  <blockquote class="now-pull-quote-body">
+    <p>{excerpt}</p>
+  </blockquote>
+  <a href={href} class="now-pull-quote-link">
+    What I am working on &rarr;
+  </a>
+</aside>

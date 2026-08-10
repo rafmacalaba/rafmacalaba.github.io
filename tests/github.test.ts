@@ -201,41 +201,109 @@ describe("GitHub fetcher", () => {
   });
 });
 
-describe("Highlights accessor", () => {
-  it("getHighlightsByType groups and sorts entries", async () => {
-    const { getHighlightsByType } = await import("../src/lib/highlights.ts");
-    const groups = await getHighlightsByType();
+describe("Content accessor", () => {
+  const samplePosts = [
+    {
+      id: "a.md",
+      slug: "a",
+      body: "",
+      data: {
+        title: "A",
+        description: "d",
+        pubDate: new Date("2026-05-01"),
+        draft: false,
+      },
+    },
+    {
+      id: "b.md",
+      slug: "b",
+      body: "",
+      data: {
+        title: "B",
+        description: "d",
+        pubDate: new Date("2026-07-01"),
+        draft: false,
+      },
+    },
+    {
+      id: "c.md",
+      slug: "c",
+      body: "",
+      data: {
+        title: "C",
+        description: "d",
+        pubDate: new Date("2026-06-01"),
+        draft: true,
+      },
+    },
+  ];
 
-    assert.ok(groups instanceof Map);
-    assert.ok(groups.has("blog"));
-    assert.ok(groups.has("paper"));
+  const sampleProjects = [
+    {
+      id: "p1.md",
+      slug: "p1",
+      body: "",
+      data: {
+        title: "P1",
+        domain: "research",
+        year: 2024,
+        summary: "s",
+        links: [{ label: "x", url: "https://example.com" }],
+        featured: false,
+      },
+    },
+    {
+      id: "p2.md",
+      slug: "p2",
+      body: "",
+      data: {
+        title: "P2",
+        domain: "policy",
+        year: 2026,
+        summary: "s",
+        links: [{ label: "x", url: "https://example.com" }],
+        featured: true,
+      },
+    },
+    {
+      id: "p3.md",
+      slug: "p3",
+      body: "",
+      data: {
+        title: "P3",
+        domain: "research",
+        year: 2025,
+        summary: "s",
+        links: [{ label: "x", url: "https://example.com" }],
+        featured: true,
+      },
+    },
+  ];
 
-    const blogs = groups.get("blog")!;
-    // TypeScript files should be in the results
-    assert.ok(blogs.length >= 1);
+  it("getPublishedPosts filters drafts and sorts by pubDate desc", async () => {
+    const { getPublishedPosts } = await import("../src/lib/content-logic.ts");
+    const published = getPublishedPosts(samplePosts);
+
+    assert.equal(published.length, 2);
+    assert.equal(published[0].id, "b.md");
+    assert.equal(published[1].id, "a.md");
   });
 
-  it("getRecentHighlights returns at most n entries", async () => {
-    const { getRecentHighlights } = await import("../src/lib/highlights.ts");
-    const recent = await getRecentHighlights(2);
+  it("getFeaturedProjects returns only featured, sorted by year desc", async () => {
+    const { getFeaturedProjects } = await import("../src/lib/content-logic.ts");
+    const featured = getFeaturedProjects(sampleProjects);
 
-    assert.ok(Array.isArray(recent));
-    assert.ok(recent.length <= 2);
+    assert.equal(featured.length, 2);
+    assert.equal(featured[0].id, "p2.md");
+    assert.equal(featured[1].id, "p3.md");
   });
 
-  it("entries without date appear last in groups", async () => {
-    const { getHighlightsByType } = await import("../src/lib/highlights.ts");
-    const groups = await getHighlightsByType();
+  it("getProjects filters by domain and sorts by year desc", async () => {
+    const { getProjects } = await import("../src/lib/content-logic.ts");
+    const research = getProjects(sampleProjects, { domain: "research" });
 
-    for (const [, entries] of groups) {
-      const withDates = entries.filter((e: { date?: string }) => e.date);
-      const withoutDates = entries.filter((e: { date?: string }) => !e.date);
-      // All with dates should come before without dates
-      if (withDates.length > 0 && withoutDates.length > 0) {
-        const lastDated = entries.indexOf(withDates.at(-1)!);
-        const firstUndated = entries.indexOf(withoutDates[0]);
-        assert.ok(lastDated < firstUndated, "Dated entries should precede undated ones");
-      }
-    }
+    assert.equal(research.length, 2);
+    assert.equal(research[0].id, "p3.md");
+    assert.equal(research[1].id, "p1.md");
   });
 });

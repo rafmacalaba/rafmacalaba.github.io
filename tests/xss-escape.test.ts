@@ -27,9 +27,13 @@ describe("ADV-001: XSS escape on profile.company", () => {
       !/set:html\s*=\s*\{?company\}?/.test(src),
       "company must not be injected via set:html (XSS sink)",
     );
+    assert.ok(
+      !/set:html\s*=\s*\{?profile\.(company|bio|name)\}?/.test(src),
+      "profile fields must not be injected via set:html (XSS sink)",
+    );
 
     assert.ok(
-      /<p class="hero-tagline">\{tagline\}<\/p>/.test(src),
+      /<p class="hero-tagline">\{siteConfig\.tagline\}<\/p>/.test(src),
       "hero-tagline should use Astro auto-escape",
     );
   });

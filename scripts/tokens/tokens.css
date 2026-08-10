@@ -1,0 +1,187 @@
+:root {
+  --color-bg: #FAFAF9;
+  --color-fg: #1C1B1A;
+  --color-muted: #6B6B6B;
+  --color-accent: #D97706;
+  --color-accent-hover: #B45309;
+  --color-border: #E7E5E4;
+  --color-card: #FFFFFF;
+  --radius: 8px;
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-6: 3rem;
+  --space-8: 4rem;
+  --space-12: 6rem;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --color-bg: #0A0A0A;
+  --color-fg: #F5F5F4;
+  --color-muted: #9C9C9C;
+  --color-accent: #D97706;
+  --color-accent-hover: #F59E0B;
+  --color-border: #262626;
+  --color-card: #141413;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--color-bg); color: var(--color-fg); font-family: var(--font-body); }
+a { color: var(--color-accent); text-decoration: none; }
+a:hover { color: var(--color-accent-hover); text-decoration: underline; }
+
+.showcase {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-3) var(--space-8);
+}
+
+.kicker {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-muted);
+  margin: 0 0 var(--space-1);
+}
+
+.showcase-head h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--space-2);
+}
+
+.lede {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  margin: 0 0 var(--space-6);
+  max-width: 50ch;
+}
+
+.block {
+  margin-top: var(--space-6);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.block h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--space-3);
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  margin: 0 0 var(--space-2);
+}
+
+.h2-sample {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.25rem;
+  margin: 0 0 var(--space-2);
+}
+
+.body-sample {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 0 var(--space-2);
+  max-width: 50ch;
+}
+
+.meta {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-1);
+}
+
+.swatch {
+  aspect-ratio: 1;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0.4rem;
+  font-size: 0.7rem;
+  color: var(--color-fg);
+}
+
+.swatch-bg { background: var(--color-bg); }
+.swatch-fg { background: var(--color-fg); color: var(--color-bg); }
+.swatch-muted { background: var(--color-muted); color: var(--color-bg); }
+.swatch-accent { background: var(--color-accent); color: var(--color-bg); border-color: var(--color-accent); }
+.swatch-border { background: var(--color-border); }
+
+.link {
+  display: inline-block;
+  margin-bottom: var(--space-2);
+}
+
+.chips {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-3);
+}
+
+.chip {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  color: var(--color-fg);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-family: inherit;
+}
+
+.chip[aria-pressed="true"] {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border-color: var(--color-accent);
+}
+
+.card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-3);
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.05rem;
+  margin: 0 0 var(--space-1);
+}
+
+.card-body {
+  font-size: 0.95rem;
+  margin: 0 0 var(--space-2);
+  color: var(--color-fg);
+}
+
+.card-meta {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  margin: 0;
+}

@@ -1,17 +1,24 @@
 ---
-import ThemeToggle from "../components/ThemeToggle.astro";
+import SiteNav from "../components/SiteNav.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 import "../styles/global.css";
+import { siteConfig } from "../lib/site.ts";
 
 interface Props {
   title?: string;
   description?: string;
+  chrome?: boolean;
+  prose?: boolean;
 }
+
 const {
-  title = "Rafael Macalaba",
-  description = "Personal portfolio of Rafael Macalaba — researcher, data scientist.",
+  title = siteConfig.name,
+  description = `${siteConfig.tagline} — ${siteConfig.name}.`,
+  chrome = true,
+  prose = false,
 } = Astro.props;
 
-const fullTitle = title === "Rafael Macalaba" ? title : `${title} — Rafael Macalaba`;
+const fullTitle = title === siteConfig.name ? title : `${title} — ${siteConfig.name}`;
 ---
 
 <!doctype html>
@@ -50,31 +57,14 @@ const fullTitle = title === "Rafael Macalaba" ? title : `${title} — Rafael Mac
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <header class="site-header">
-      <nav class="site-nav" aria-label="Primary">
-        <a href="/" class="site-brand">Rafael Macalaba</a>
-        <ul class="site-links">
-          <li><a href="/">Home</a></li>
-          <li><a href="/projects">Projects</a></li>
-          <li><a href="/highlights">Highlights</a></li>
-        </ul>
-      </nav>
-      <ThemeToggle />
-    </header>
-    <main id="main-content" class="site-main">
+    {chrome && <SiteNav />}
+    <main
+      id="main-content"
+      class:list={["site-main", prose && "site-main--prose"]}
+    >
       <slot />
     </main>
-    <footer class="site-footer">
-      <p>&copy; {new Date().getFullYear()} Rafael Macalaba</p>
-      <p class="site-footer-meta">
-        Built with <a href="https://astro.build" rel="noopener noreferrer">Astro</a>
-        &middot;
-        <a
-          href="https://github.com/rafmacalaba/personal-portfolio"
-          rel="noopener noreferrer">View source on GitHub</a
-        >
-      </p>
-    </footer>
+    {chrome && <SiteFooter />}
     <script is:inline src="/scripts/theme.js"></script>
   </body>
 </html>
