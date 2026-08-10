@@ -1,7 +1,7 @@
 # Rafael Macalaba — Personal Portfolio
 
 Static personal portfolio built with [Astro](https://astro.build) and TypeScript.
-Deployed to GitHub Pages on push to `master`.
+Deployed to GitHub Pages on push to `main`.
 
 ## Local dev
 
@@ -34,7 +34,7 @@ npm test
 
 ## Deployment
 
-Push to `master`. GitHub Actions builds and deploys to Pages.
+Push to `main`. GitHub Actions builds and deploys to Pages.
 Configured in `.github/workflows/pages.yml`.
 
 ## Content
