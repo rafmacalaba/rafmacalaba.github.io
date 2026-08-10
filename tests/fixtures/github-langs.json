@@ -1,0 +1,7 @@
+[
+  { "name": "Python", "bytes": 450000 },
+  { "name": "TypeScript", "bytes": 180000 },
+  { "name": "Jupyter Notebook", "bytes": 95000 },
+  { "name": "R", "bytes": 30000 },
+  { "name": "HTML", "bytes": 15000 }
+]

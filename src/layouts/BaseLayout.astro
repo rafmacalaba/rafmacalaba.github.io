@@ -1,0 +1,80 @@
+---
+import ThemeToggle from "../components/ThemeToggle.astro";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = "Rafael Macalaba",
+  description = "Personal portfolio of Rafael Macalaba — researcher, data scientist.",
+} = Astro.props;
+
+const fullTitle = title === "Rafael Macalaba" ? title : `${title} — Rafael Macalaba`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme") || "system";
+          var effective = stored;
+          if (stored !== "light" && stored !== "dark") {
+            effective = window.matchMedia("(prefers-color-scheme:dark)").matches
+              ? "dark"
+              : "light";
+          }
+          document.documentElement.setAttribute("data-theme", effective);
+          document.documentElement.setAttribute("data-theme-pref", stored);
+        } catch (e) {
+          var fallback = window.matchMedia("(prefers-color-scheme:dark)").matches
+            ? "dark"
+            : "light";
+          document.documentElement.setAttribute("data-theme", fallback);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="site-header">
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/" class="site-brand">Rafael Macalaba</a>
+        <ul class="site-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/projects">Projects</a></li>
+          <li><a href="/highlights">Highlights</a></li>
+        </ul>
+      </nav>
+      <ThemeToggle />
+    </header>
+    <main id="main-content" class="site-main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <p>&copy; {new Date().getFullYear()} Rafael Macalaba</p>
+      <p class="site-footer-meta">
+        Built with <a href="https://astro.build" rel="noopener noreferrer">Astro</a>
+        &middot;
+        <a
+          href="https://github.com/rafmacalaba/personal-portfolio"
+          rel="noopener noreferrer">View source on GitHub</a
+        >
+      </p>
+    </footer>
+    <script is:inline src="/scripts/theme.js"></script>
+  </body>
+</html>
