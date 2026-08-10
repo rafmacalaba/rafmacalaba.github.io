@@ -258,3 +258,105 @@ mode.
   and `src/content/now.md`, edit as needed.
 - Before merge: confirm "Selected work" -> "Highlights" rename reads right
   in context on `/`.
+
+---
+
+# Post-ship: portfolio-content-2026-08 v2 (DRAFT — pending owner approval)
+
+Follow-up to the merged `portfolio-content-2026-08` PR (#6). Adds two
+profiles, a Home social-icons row, and restores Now-page chrome.
+
+Status: DRAFT (pending owner approval)
+Lane branch: `feat/portfolio-content-2026-08-v2`
+
+## Scope (in)
+
+1. **Now page chrome** — drop `chrome={false}` in `src/pages/now.astro` so
+   `SiteNav` + `SiteFooter` render. The page should still feel quiet
+   (single doc, generous measure) but the top nav must show the user can
+   get back to Home / Work / Writing / About.
+2. **Two new profiles**:
+   - HuggingFace: `https://huggingface.co/rafmacalaba`
+   - Kaggle: `https://www.kaggle.com/leafar` (label: "Kaggle (Competitions Expert)")
+3. **About page external links** — append both to `externalLinks` array in
+   `src/pages/about.astro`. Add inline SVG icons for `huggingface` and
+   `kaggle` to the existing `iconFor` switch. Match existing icon style
+   (16x16, currentColor, stroke-width 2, Lucide-style).
+4. **Home social icons row** — new `src/components/SocialIcons.astro`
+   component, rendered in the hero section below the avatar image. Renders
+   the same profile set as About page external links (GitHub, LinkedIn,
+   World Bank Blogs, npm, HuggingFace, Kaggle, Email). Icons reuse the
+   same SVG definitions as About (refactor to a single source so updates
+   are shared).
+5. **Footer** — no change. (Footer link list is empty by default; user
+   wants the icons on Home, not Footer.)
+
+## Scope (out)
+
+- No new pages, no new routes
+- No schema changes
+- No design system changes (icons match existing inline-SVG pattern)
+- No copy changes on About bio
+
+## Decisions taken from owner
+
+- Icons on Home go inside the hero section, below the avatar image,
+  in the right side of the hero flex container (alongside the avatar).
+- Kaggle label displays "Kaggle (Competitions Expert)" inline next to
+  the icon (small text), matching the existing `World Bank Blogs` style
+  in About.
+
+## Phases (single phase, no deps)
+
+- Refactor SVG icon definitions from `about.astro` into a small shared
+  module `src/lib/social-icons.ts` (pure function returning SVG string
+  by icon name)
+- Update `src/pages/about.astro` to import icons + append HuggingFace +
+  Kaggle
+- Create `src/components/SocialIcons.astro` rendering the full profile
+  list
+- Update `src/pages/index.astro` hero to render `<SocialIcons />` below
+  the avatar
+- Update `src/pages/now.astro` to drop `chrome={false}`
+- Build + check + tests pass; screenshots of Home (icons row visible),
+  About (both new icons), Now (nav visible) under
+  `armada/screenshots/portfolio-content-2026-08-v2/`
+- PR opened against `main`
+
+## Success criteria
+
+- [ ] `/` shows social icons row in the hero, below the avatar
+- [ ] `/` icons include GitHub, LinkedIn, World Bank Blogs, npm,
+      HuggingFace, Kaggle (with "Competitions Expert" label), Email
+- [ ] `/about` external-links row includes HuggingFace and Kaggle with
+      matching icons and labels
+- [ ] `/now` renders with `SiteNav` and `SiteFooter` (chrome restored)
+- [ ] Icon definitions are shared between Home and About (single source
+      in `src/lib/social-icons.ts`)
+- [ ] `npm run build` succeeds
+- [ ] `npm run check` 0 errors
+- [ ] Existing tests still pass (no regressions)
+- [ ] Screenshots: Home (icons row), About (new icons), Now (nav
+      restored) under `armada/screenshots/portfolio-content-2026-08-v2/`
+- [ ] PR open against `main`
+
+## Risk
+
+Low. UI additions to existing pages, one small component refactor to
+share icon definitions. No schema, layout, or theme changes. Build / test
+regressions are the only realistic failure mode.
+
+## Owner review gates
+
+- Before merge: confirm icon set on Home matches About (same profiles,
+  same labels)
+- Before merge: confirm Kaggle "Competitions Expert" reads right in
+  context (About row + Home icons row)
+- Before merge: confirm Now page nav doesn't feel cramped alongside the
+  long-form narrative
+
+## Resolved open questions
+
+- Home icons row placement: inside hero, below avatar (right column)
+- Kaggle label format: "Kaggle (Competitions Expert)" inline
+- Icon source-of-truth: `src/lib/social-icons.ts` (shared by About + Home)

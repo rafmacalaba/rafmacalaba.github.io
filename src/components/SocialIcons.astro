@@ -1,0 +1,38 @@
+---
+import { socialIcon } from "../lib/social-icons.ts";
+
+const profiles = [
+  { label: "GitHub", href: "https://github.com/rafmacalaba", icon: "github" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/rafaelmacalaba/", icon: "linkedin" },
+  { label: "World Bank Blogs", href: "https://blogs.worldbank.org/en/team/r/rafael-sevilla-macalaba", icon: "worldbank" },
+  { label: "npm", href: "https://www.npmjs.com/~rafamacalaba", icon: "npm" },
+  { label: "HuggingFace", href: "https://huggingface.co/rafmacalaba", icon: "huggingface" },
+  { label: "Kaggle (Competitions Expert)", href: "https://www.kaggle.com/leafar", icon: "kaggle" },
+  { label: "Email", href: "mailto:rafael.macalaba@yahoo.com", icon: "email" },
+];
+---
+
+<div class="social-icons-row">
+  {profiles.map((link) => {
+    const isMailto = link.icon === "email";
+    return (
+      <a
+        href={link.href}
+        class="icon-link"
+        {...(!isMailto ? { rel: "noopener noreferrer", target: "_blank" } : {})}
+      >
+        <span aria-hidden="true" set:html={socialIcon(link.icon)} />
+        {link.label}
+      </a>
+    );
+  })}
+</div>
+
+<style>
+  .social-icons-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+</style>
