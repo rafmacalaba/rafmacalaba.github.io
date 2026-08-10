@@ -26,7 +26,7 @@
     } catch (e) {
       /* localStorage unavailable */
     }
-    return "system";
+    return "light";
   }
 
   function resolveEffective(stored) {
