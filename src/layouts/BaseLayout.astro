@@ -37,20 +37,11 @@ const fullTitle = title === siteConfig.name ? title : `${title} — ${siteConfig
     <script is:inline>
       (function () {
         try {
-          var stored = localStorage.getItem("theme") || "system";
-          var effective = stored;
-          if (stored !== "light" && stored !== "dark") {
-            effective = window.matchMedia("(prefers-color-scheme:dark)").matches
-              ? "dark"
-              : "light";
-          }
-          document.documentElement.setAttribute("data-theme", effective);
+          var stored = localStorage.getItem("theme") || "light";
+          document.documentElement.setAttribute("data-theme", stored);
           document.documentElement.setAttribute("data-theme-pref", stored);
         } catch (e) {
-          var fallback = window.matchMedia("(prefers-color-scheme:dark)").matches
-            ? "dark"
-            : "light";
-          document.documentElement.setAttribute("data-theme", fallback);
+          document.documentElement.setAttribute("data-theme", "light");
         }
       })();
     </script>

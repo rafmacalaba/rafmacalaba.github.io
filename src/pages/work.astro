@@ -26,29 +26,35 @@ const chips: { label: string; value: string }[] = [
     </p>
   </header>
 
-  <div class="chip-row" role="group" aria-label="Filter projects by domain">
-    {chips.map((c, i) => (
-      <Chip
-        label={c.label}
-        value={c.value}
-        group="domain"
-        pressed={i === 0}
-      />
-    ))}
-  </div>
+  {projects.length === 0 ? (
+    <p>No projects yet. Owner will add work here.</p>
+  ) : (
+    <>
+      <div class="chip-row" role="group" aria-label="Filter projects by domain">
+        {chips.map((c, i) => (
+          <Chip
+            label={c.label}
+            value={c.value}
+            group="domain"
+            pressed={i === 0}
+          />
+        ))}
+      </div>
 
-  <div class="project-grid">
-    {projects.map((p) => (
-      <ProjectCard
-        title={p.data.title}
-        domain={p.data.domain}
-        year={p.data.year}
-        summary={p.data.summary}
-        links={p.data.links}
-        slug={p.slug}
-      />
-    ))}
-  </div>
+      <div class="project-grid">
+        {projects.map((p) => (
+          <ProjectCard
+            title={p.data.title}
+            domain={p.data.domain}
+            year={p.data.year}
+            summary={p.data.summary}
+            links={p.data.links}
+            slug={p.slug}
+          />
+        ))}
+      </div>
+    </>
+  )}
 
   <script>
     import "../scripts/filter.ts";
