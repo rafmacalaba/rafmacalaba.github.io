@@ -24,8 +24,7 @@ describe("RSS feed", () => {
   it("emits one <item> per published post", () => {
     if (!existsSync(DIST_RSS)) return;
     const items = xml.match(/<item>/g) ?? [];
-    // 0 blog posts = 0 feed items
-    assert.equal(items.length, 0);
+    assert.equal(items.length, 5);
   });
 
   it("items include title, description, pubDate, link", () => {

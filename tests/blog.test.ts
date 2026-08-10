@@ -13,11 +13,9 @@ function listDirs(path: string): string[] {
 
 describe("Blog route", () => {
   it("dist/blog/<slug>/index.html exists for each published post", () => {
-    // With 0 posts, no dynamic blog routes are generated so dist/blog/ may not exist.
     if (!existsSync(DIST_BLOG)) return;
     const slugs = listDirs(DIST_BLOG);
-    // 0 blog posts = 0 blog pages
-    assert.equal(slugs.length, 0);
+    assert.equal(slugs.length, 5);
   });
 
   it("draft post is not generated as a route", () => {
