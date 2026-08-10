@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Design tokens</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap"
+    />
+    <link rel="stylesheet" href="tokens.css" />
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme") || "system";
+          var effective = stored;
+          if (stored !== "light" && stored !== "dark") {
+            effective = window.matchMedia("(prefers-color-scheme:dark)").matches
+              ? "dark"
+              : "light";
+          }
+          document.documentElement.setAttribute("data-theme", effective);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <main class="showcase">
+      <header class="showcase-head">
+        <p class="kicker">Design system</p>
+        <h1>Quiet modernist</h1>
+        <p class="lede">
+          Amber accent. Inter for body, Newsreader for display. Borders and
+          whitespace do the work.
+        </p>
+      </header>
+
+      <section class="block">
+        <h2>Type scale</h2>
+        <p class="display">Display &mdash; Newsreader</p>
+        <p class="h2-sample">Section heading</p>
+        <p class="body-sample">
+          Body text. Inter at 1rem with a 1.6 line-height. Used for paragraphs,
+          cards, and metadata. Readable at every breakpoint.
+        </p>
+        <p class="meta">Small / metadata / 0.875rem</p>
+      </section>
+
+      <section class="block">
+        <h2>Palette</h2>
+        <div class="swatches">
+          <div class="swatch swatch-bg"><span>bg</span></div>
+          <div class="swatch swatch-fg"><span>fg</span></div>
+          <div class="swatch swatch-muted"><span>muted</span></div>
+          <div class="swatch swatch-accent"><span>accent</span></div>
+          <div class="swatch swatch-border"><span>border</span></div>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2>Components</h2>
+        <a class="link" href="#">Inline link with amber accent</a>
+        <div class="chips">
+          <button class="chip" aria-pressed="true">research</button>
+          <button class="chip" aria-pressed="false">engineering</button>
+          <button class="chip" aria-pressed="false">policy</button>
+        </div>
+        <article class="card">
+          <h3 class="card-title">Card title</h3>
+          <p class="card-body">
+            Cards use a thin border, no shadow, generous padding. The accent
+            only appears on hover, focus, and links.
+          </p>
+          <p class="card-meta">research &middot; 2026</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

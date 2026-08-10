@@ -1,0 +1,25 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  href: string;
+}
+
+const { title, description, pubDate, href } = Astro.props;
+const dateLabel = pubDate.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});
+---
+
+<article class="post-card">
+  <a href={href} class="post-card-title-link">
+    <h3 class="post-card-title">{title}</h3>
+  </a>
+  <p class="post-card-date">
+    <time datetime={pubDate.toISOString()}>{dateLabel}</time>
+  </p>
+  <p class="post-card-desc">{description}</p>
+</article>

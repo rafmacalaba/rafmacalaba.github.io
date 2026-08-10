@@ -1,43 +1,51 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import RepoCard from "../components/RepoCard.astro";
-import HighlightItem from "../components/HighlightItem.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import PostCard from "../components/PostCard.astro";
+import NowPullQuote from "../components/NowPullQuote.astro";
+import { siteConfig } from "../lib/site.ts";
 import { fetchGitHubData } from "../lib/github.ts";
-import { getRecentHighlights } from "../lib/highlights.ts";
+import { getRecentPosts, getFeaturedProjects, getNow } from "../lib/content.ts";
 
 const data = await fetchGitHubData();
-const { profile, pinnedRepos } = data;
+const { profile } = data;
 
-const profileName = profile.name ?? profile.login;
-const tagline = profile.company ?? "Researcher · Data Scientist";
-const bio =
-  profile.bio ?? "Building tools at the intersection of data, research, and policy.";
-const recent = await getRecentHighlights(4);
-const topRepos = pinnedRepos.slice(0, 6);
+const featured = (await getFeaturedProjects()).slice(0, 4);
+const recentPosts = await getRecentPosts(3);
+const now = await getNow();
+
+const nowExcerpt = (() => {
+  if (!now) return "";
+  const lines = now.body
+    .split("\n")
+    .map((l) => l.trim())
+    .filter((l) => l && !l.startsWith("#") && !l.startsWith("-"));
+  return lines[0] ?? "";
+})();
 
 const contactLinks: { href: string; label: string }[] = [
-  { href: profile.html_url, label: "GitHub" },
+  ...siteConfig.contactLinks,
 ];
-if (profile.blog) {
-  contactLinks.push({ href: profile.blog, label: "Website" });
+if (profile.html_url && !contactLinks.some((c) => c.href === profile.html_url)) {
+  contactLinks.push({ href: profile.html_url, label: "GitHub profile" });
 }
 ---
 
 <BaseLayout
-  title="Rafael Macalaba"
-  description={`Personal portfolio of ${profileName} — ${tagline}.`}
+  title={siteConfig.name}
+  description={siteConfig.tagline}
 >
   <section class="hero">
     <div>
-      <h1 class="hero-name">{profileName}</h1>
-      <p class="hero-tagline">{tagline}</p>
-      {profile.location && <p class="hero-meta">{profile.location}</p>}
+      <p class="hero-kicker">{profile.location ?? "Available for collaboration"}</p>
+      <h1 class="hero-name">{siteConfig.name}</h1>
+      <p class="hero-tagline">{siteConfig.tagline}</p>
     </div>
     {profile.avatar_url && (
       <img
         class="hero-avatar"
         src={profile.avatar_url}
-        alt={`${profileName} avatar`}
+        alt={`${siteConfig.name} avatar`}
         width="96"
         height="96"
         loading="eager"
@@ -45,57 +53,56 @@ if (profile.blog) {
     )}
   </section>
 
-  <section class="section">
-    <p class="bio">{bio}</p>
-  </section>
-
-  <section class="section">
-    <header class="section-header">
-      <h2 class="section-title">Recent highlights</h2>
-      <a class="section-link" href="/highlights">All highlights &rarr;</a>
-    </header>
-    <div class="highlights-strip">
-      {recent.map((h) => (
-        <HighlightItem
-          title={h.title}
-          url={h.url}
-          description={h.description}
-          venue={h.venue}
-          date={h.date}
-        />
-      ))}
-    </div>
-  </section>
-
-  <section class="section">
-    <header class="section-header">
-      <h2 class="section-title">Pinned projects</h2>
-      <a class="section-link" href="/projects">All projects &rarr;</a>
-    </header>
-    {topRepos.length > 0 ? (
-      <div class="grid">
-        {topRepos.map((r) => (
-          <RepoCard
-            name={r.name}
-            description={r.description}
-            html_url={r.html_url}
-            language={r.language}
-            stargazers_count={r.stargazers_count}
-            forks_count={r.forks_count}
+  {featured.length > 0 && (
+    <section class="section">
+      <header class="section-header">
+        <h2 class="section-title">Selected work</h2>
+        <a class="section-link" href="/work">All work &rarr;</a>
+      </header>
+      <div class="project-grid">
+        {featured.map((p) => (
+          <ProjectCard
+            title={p.data.title}
+            domain={p.data.domain}
+            year={p.data.year}
+            summary={p.data.summary}
+            links={p.data.links}
+            slug={p.slug}
           />
         ))}
       </div>
-    ) : (
-      <p class="bio">No pinned projects yet.</p>
-    )}
-  </section>
+    </section>
+  )}
 
-  <section class="section">
-    <h2 class="section-title">Contact</h2>
-    <ul class="contact-list">
-      {contactLinks.map((link) => (
-        <li><a href={link.href} rel="noopener noreferrer">{link.label}</a></li>
-      ))}
-    </ul>
-  </section>
+  {recentPosts.length > 0 && (
+    <section class="section">
+      <header class="section-header">
+        <h2 class="section-title">Recent writing</h2>
+        <a class="section-link" href="/writing">All writing &rarr;</a>
+      </header>
+      <div class="post-list">
+        {recentPosts.map((p) => (
+          <PostCard
+            title={p.data.title}
+            description={p.data.description}
+            pubDate={p.data.pubDate}
+            href={`/blog/${p.slug}`}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  {now && <NowPullQuote excerpt={nowExcerpt} />}
+
+  {contactLinks.length > 0 && (
+    <section class="section">
+      <h2 class="section-title">Contact</h2>
+      <ul class="contact-list">
+        {contactLinks.map((link) => (
+          <li><a href={link.href} rel="noopener noreferrer">{link.label}</a></li>
+        ))}
+      </ul>
+    </section>
+  )}
 </BaseLayout>

@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PostCard from "../components/PostCard.astro";
+import { getPublishedPosts } from "../lib/content.ts";
+
+const posts = await getPublishedPosts();
+---
+
+<BaseLayout
+  title="Writing"
+  description="Essays and field notes."
+>
+  <header class="page-heading">
+    <h1>Writing</h1>
+    <p>
+      Essays and field notes, reverse chronological. Subscribe via
+      <a href="/rss.xml">RSS</a>.
+    </p>
+  </header>
+
+  {posts.length === 0 ? (
+    <p>No posts yet.</p>
+  ) : (
+    <div class="post-list">
+      {posts.map((p) => (
+        <PostCard
+          title={p.data.title}
+          description={p.data.description}
+          pubDate={p.data.pubDate}
+          href={`/blog/${p.slug}`}
+        />
+      ))}
+    </div>
+  )}
+</BaseLayout>

@@ -1,0 +1,20 @@
+---
+interface Props {
+  label: string;
+  pressed?: boolean;
+  group?: string;
+  value?: string;
+}
+
+const { label, pressed = false, group, value } = Astro.props;
+const filterAttrs = group && value ? { "data-filter-group": group, "data-filter-value": value } : {};
+---
+
+<button
+  type="button"
+  class="chip"
+  aria-pressed={pressed ? "true" : "false"}
+  {...filterAttrs}
+>
+  {label}
+</button>
