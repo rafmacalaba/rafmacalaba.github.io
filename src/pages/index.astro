@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import PostCard from "../components/PostCard.astro";
 import NowPullQuote from "../components/NowPullQuote.astro";
+import SocialIcons from "../components/SocialIcons.astro";
 import { siteConfig } from "../lib/site.ts";
 import { fetchGitHubData } from "../lib/github.ts";
 import { getRecentPosts, getFeaturedProjects, getNow } from "../lib/content.ts";
@@ -51,6 +52,7 @@ if (profile.html_url && !contactLinks.some((c) => c.href === profile.html_url)) 
         loading="eager"
       />
     )}
+    <SocialIcons />
   </section>
 
   {featured.length > 0 && (
