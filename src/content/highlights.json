@@ -1,0 +1,28 @@
+[
+  {
+    "type": "blog",
+    "title": "World Bank Blogs — Author Page",
+    "url": "https://blogs.worldbank.org/en/team/rafael-macalaba",
+    "description": "Rafael Macalaba author index on World Bank Blogs"
+  },
+  {
+    "type": "blog",
+    "title": "Synthetic Data for Development",
+    "url": "https://blogs.worldbank.org/en/opendata/synthetic-data",
+    "description": "Synthetic data post on World Bank Open Data blog"
+  },
+  {
+    "type": "paper",
+    "title": "ICLR 2025 Paper",
+    "url": "https://iclr.cc/Conferences/2025",
+    "venue": "ICLR 2025",
+    "description": "Presented at ICLR 2025 (exact title not verified)"
+  },
+  {
+    "type": "paper",
+    "title": "Large Language Models and Synthetic Data for Monitoring Dataset Mentions in Research Papers",
+    "url": "https://arxiv.org/abs/2502.10263",
+    "venue": "arXiv 2502.10263",
+    "description": "Preprint on arXiv"
+  }
+]

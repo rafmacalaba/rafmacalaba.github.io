@@ -1,0 +1,24 @@
+---
+interface Props {
+  title: string;
+  url: string;
+  description?: string | undefined;
+  venue?: string | undefined;
+  date?: string | undefined;
+}
+const { title, url, description, venue, date } = Astro.props;
+---
+
+<article class="highlight-item">
+  <div class="highlight-body">
+    <h3 class="highlight-title">
+      <a href={url} rel="noopener noreferrer">{title}</a>
+    </h3>
+    {description && <p class="highlight-desc">{description}</p>}
+    <p class="highlight-meta">
+      {venue && <span class="highlight-venue">{venue}</span>}
+      {venue && date && <span aria-hidden="true"> &middot; </span>}
+      {date && <time class="highlight-date" datetime={date}>{date}</time>}
+    </p>
+  </div>
+</article>
