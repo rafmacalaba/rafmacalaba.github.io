@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Geospatial data in World Bank projects</title>
-<meta name="description" content="Of 966 World Bank projects whose appraisal or information documents use data, two-thirds (68%) draw on geospatial data, mostly at the level of regions and districts; only over 1 in 8 use exact locations. Under the strictest checks on the labels the share is 53%.">
+<meta name="description" content="Of 966 World Bank projects that use data, two-thirds (68%) draw on geospatial data, mostly at the level of regions and districts; only over 1 in 8 use exact locations. Under the strictest checks on the labels the share is 53%.">
 <meta name="theme-color" content="#d9ebfc"><style>
 :root { --ink:#0f1f3d; --dim:#44557a; --line:#d4e0f0; --panel:#ffffff; --indigo:#4338ca; --navy:#1e3a8a;
   --track:#e6edf7; --opp:#b45309; --focus:#1d4ed8; }
@@ -39,6 +39,14 @@ h1 { font-size:clamp(28px,3.2vw,38px); line-height:1.15; letter-spacing:-.02em; 
   border-radius:10px; padding:10px 16px; cursor:pointer; min-height:44px; white-space:nowrap; }
 .copy:hover { background:#f0f5fc; border-color:#8aa4cc; }
 #copied { font-size:14px; color:var(--dim); min-height:20px; display:block; text-align:right; margin-top:4px; }
+.unit { display:flex; align-items:center; gap:6px; margin:0 0 12px; flex-wrap:wrap; }
+.unit > span { font-size:15px; font-weight:600; color:var(--dim); margin-right:6px; }
+.unit button { font:inherit; font-size:16px; font-weight:600; color:var(--navy); background:#fff; border:1px solid #b9cbe6;
+  border-radius:999px; padding:8px 18px; min-height:44px; cursor:pointer; }
+.unit button small { font-weight:500; color:var(--dim); margin-left:6px; font-size:14px; }
+.unit button:hover { border-color:#8aa4cc; background:#f0f5fc; }
+.unit button[aria-pressed=true] { background:var(--navy); border-color:var(--navy); color:#fff; }
+.unit button[aria-pressed=true] small { color:#c7d2fe; }
 .tabs { display:flex; gap:8px; margin:22px 0 0; padding:6px; background:rgba(255,255,255,.6); border:1px solid var(--line);
   border-radius:14px; width:max-content; max-width:100%; overflow-x:auto; }
 [role=tab] { font:inherit; font-size:16.5px; font-weight:600; color:var(--dim); background:none; border:0; border-radius:10px;
@@ -108,20 +116,29 @@ footer { margin-top:22px; font-size:15.5px; color:var(--dim); }
   .step:nth-child(3) { padding-left:0; } .step:nth-child(3)::before { display:none; }
   .method { padding:4px 20px; }
 }
+@media (max-width:520px) { .unit button { padding:8px 14px; } .unit button small { display:none; } }
 @media (prefers-reduced-motion:no-preference) { [role=tab] { transition:background-color .15s,color .15s; } }
-@media print { body { background:#fff; } .tabs, .copy, .skip { display:none; } [role=tabpanel][hidden] { display:block !important; }
+@media print { body { background:#fff; } .tabs, .copy, .skip, .unit { display:none; } [role=tabpanel][hidden] { display:block !important; }
   .tabpanel { break-inside:avoid; box-shadow:none; } }
 </style></head><body>
-<a class="skip" href="#pillars">Skip to the analysis</a>
+<a class="skip" href="#views">Skip to the analysis</a>
 <main>
 <header>
   <div><h1>How often do World Bank projects use geospatial data?</h1>
     <p class="kicker">Evidence from 1,204 projects, read through 1,591 Project Appraisal and Project Information Documents</p></div>
-  <div><button class="copy" id="copy" type="button" data-text="Of 966 World Bank projects whose appraisal or information documents use data, two-thirds (68%) draw on geospatial data, mostly at the level of regions and districts; only over 1 in 8 use exact locations. Under the strictest checks on the labels the share is 53%.">Copy the key finding</button><span id="copied" aria-live="polite"></span></div>
+  <div><button class="copy" id="copy" type="button">Copy the key finding</button><span id="copied" aria-live="polite"></span></div>
 </header>
 
-<section class="panel answer" aria-labelledby="finding">
-  <p class="lead" id="finding">In <strong>two-thirds of World Bank projects that use data</strong>
+<div class="unit" role="group" aria-label="Count by">
+  <span id="unit-label">Count by</span>
+  <button type="button" data-unit-btn="projects" aria-pressed="true">Projects <small>654 of 966</small></button>
+  <button type="button" data-unit-btn="documents" aria-pressed="false">Documents <small>771 of 1,206</small></button>
+</div>
+
+<div id="views">
+  <div class="view" data-unit="projects" data-finding="Of 966 World Bank projects that use data, two-thirds (68%) draw on geospatial data, mostly at the level of regions and districts; only over 1 in 8 use exact locations. Under the strictest checks on the labels the share is 53%.">
+<section class="panel answer" aria-labelledby="finding-project">
+  <p class="lead" id="finding-project">In <strong>two-thirds of World Bank projects that use data</strong>
   (654 of 966, 68%), teams draw on geospatial data, mostly at the level of regions and districts.
   <span class="range">Under the strictest checks the share is 53%. <a href="#reliability">How reliable is this?</a></span></p>
   <figure style="margin:0"><div class="waffle" role="img" aria-label="68 of every 100 data-using projects use geospatial data"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
@@ -134,24 +151,23 @@ footer { margin-top:22px; font-size:15.5px; color:var(--dim); }
   </ol>
 </section>
 
-<div id="pillars" class="tabs" role="tablist" aria-label="Analysis">
-  <button role="tab" id="t-reach" data-id="reach" aria-controls="p-reach" aria-selected="true">Reach<small>How widespread is it?</small></button>
-  <button role="tab" id="t-precision" data-id="precision" aria-controls="p-precision" aria-selected="false" tabindex="-1">Precision<small>How detailed is the geography?</small></button>
-  <button role="tab" id="t-sources" data-id="sources" aria-controls="p-sources" aria-selected="false" tabindex="-1">Sources<small>Which data carries it?</small></button>
+<div class="tabs" role="tablist" aria-label="Analysis, counted by project">
+  <button role="tab" id="t-reach-project" data-id="reach" aria-controls="p-reach-project" aria-selected="true">Reach<small>How widespread is it?</small></button>
+  <button role="tab" id="t-precision-project" data-id="precision" aria-controls="p-precision-project" aria-selected="false" tabindex="-1">Precision<small>How detailed is the geography?</small></button>
+  <button role="tab" id="t-sources-project" data-id="sources" aria-controls="p-sources-project" aria-selected="false" tabindex="-1">Sources<small>Which data carries it?</small></button>
 </div>
 
-<section class="panel tabpanel" role="tabpanel" id="p-reach" aria-labelledby="t-reach" tabindex="0">
+<section class="panel tabpanel" role="tabpanel" id="p-reach-project" aria-labelledby="t-reach-project" tabindex="0">
   <div class="pillar">
     <div>
       <h2>Mainstream in every sector and region, and under-counted</h2>
       <p>We reviewed sampled passages, not whole documents. When we read one passage of a project, 53% show
-      geospatial data; when we read five or more, 87% do. Projects with two or more documents reviewed reach
-      81%, against 62% with one document. Read in full, more projects would likely count.</p>
+      geospatial data; when we read five or more, 86% do. Projects with two or more documents reviewed reach 81%, against 62% with one document. Read in full, more projects would likely count.</p>
       <p class="dim small">Larger, data-heavy projects also had more passages reviewed, so part of the rise reflects the projects themselves.</p>
       <div class="sowhat"><b>So what</b>Geospatial data is already part of routine project preparation, not a specialist add-on.</div>
     </div>
     <figure style="margin:0"><h3>Projects using geospatial data, by passages reviewed</h3>
-      <div class="cols" role="img" aria-label="1 passages: 53%; 2 passages: 64%; 3 passages: 76%; 4 passages: 80%; 5 or more passages: 87%"><div class="col"><div class="cb"><i style="height:53.2%"></i></div><b>53%</b>1 passage<br>329 projects</div><div class="col"><div class="cb"><i style="height:63.7%"></i></div><b>64%</b>2 passages<br>237 projects</div><div class="col"><div class="cb"><i style="height:75.7%"></i></div><b>76%</b>3 passages<br>148 projects</div><div class="col"><div class="cb"><i style="height:80.3%"></i></div><b>80%</b>4 passages<br>61 projects</div><div class="col"><div class="cb"><i style="height:87.4%"></i></div><b>87%</b>5 or more passages<br>191 projects</div></div></figure>
+      <div class="cols" role="img" aria-label="1 passages: 53%; 2 passages: 64%; 3 passages: 76%; 4 passages: 83%; 5 or more passages: 86%"><div class="col"><div class="cb"><i style="height:53.2%"></i></div><b>53%</b>1 passage<br>329 projects</div><div class="col"><div class="cb"><i style="height:63.7%"></i></div><b>64%</b>2 passages<br>237 projects</div><div class="col"><div class="cb"><i style="height:75.7%"></i></div><b>76%</b>3 passages<br>148 projects</div><div class="col"><div class="cb"><i style="height:83.1%"></i></div><b>83%</b>4 passages<br>59 projects</div><div class="col"><div class="cb"><i style="height:86.5%"></i></div><b>86%</b>5 or more passages<br>193 projects</div></div></figure>
   </div>
   <div class="row2">
     <div><h3>By sector</h3><p class="dim small">From 54% in Digital Development to 79% in Water, Sanitation and Waste Management.</p>
@@ -161,7 +177,7 @@ footer { margin-top:22px; font-size:15.5px; color:var(--dim); }
   </div>
 </section>
 
-<section class="panel tabpanel" role="tabpanel" id="p-precision" aria-labelledby="t-precision" tabindex="0" hidden>
+<section class="panel tabpanel" role="tabpanel" id="p-precision-project" aria-labelledby="t-precision-project" tabindex="0" hidden>
   <div class="pillar">
     <div>
       <h2>Geography mostly stops at the district or region</h2>
@@ -181,7 +197,7 @@ footer { margin-top:22px; font-size:15.5px; color:var(--dim); }
   </div>
 </section>
 
-<section class="panel tabpanel" role="tabpanel" id="p-sources" aria-labelledby="t-sources" tabindex="0" hidden>
+<section class="panel tabpanel" role="tabpanel" id="p-sources-project" aria-labelledby="t-sources-project" tabindex="0" hidden>
   <div class="pillar">
     <div>
       <h2>Censuses and sector records carry the geography; big surveys are quoted as national totals</h2>
@@ -205,78 +221,188 @@ footer { margin-top:22px; font-size:15.5px; color:var(--dim); }
         <li style="--c:#6a7c9e">rarely (under 25%)</li></ul>
       <div class="cloud"><a class="w hi" style="font-size:2.55rem" href="pad-pid-geospatial-evidence.html?q=census" title="Used in 111 projects; 68% of uses tied to a place">Population census</a><a class="w lo" style="font-size:1.21rem" href="pad-pid-geospatial-evidence.html?q=Logistics%20Performance%20Index" title="Used in 3 projects; 0% of uses tied to a place">Logistics Performance Index</a><a class="w lo" style="font-size:1.99rem" href="pad-pid-geospatial-evidence.html?q=health%20survey" title="Used in 47 projects; 21% of uses tied to a place">Demographic and Health Survey</a><a class="w lo" style="font-size:1.25rem" href="pad-pid-geospatial-evidence.html?q=Global%20Health%20Security%20Index" title="Used in 4 projects; 0% of uses tied to a place">Global Health Security Index</a><a class="w mid" style="font-size:1.90rem" href="pad-pid-geospatial-evidence.html?q=expenditure" title="Used in 39 projects; 46% of uses tied to a place">Household budget and expenditure surveys</a><a class="w lo" style="font-size:1.29rem" href="pad-pid-geospatial-evidence.html?q=National%20Health%20Accounts" title="Used in 5 projects; 0% of uses tied to a place">National Health Accounts</a><a class="w lo" style="font-size:1.75rem" href="pad-pid-geospatial-evidence.html?q=force%20survey" title="Used in 28 projects; 15% of uses tied to a place">Labour Force Survey</a><a class="w hi" style="font-size:1.35rem" href="pad-pid-geospatial-evidence.html?q=satellite" title="Used in 7 projects; 100% of uses tied to a place">Satellite and remote-sensing data</a><a class="w lo" style="font-size:1.72rem" href="pad-pid-geospatial-evidence.html?q=Enterprise%20Survey" title="Used in 26 projects; 8% of uses tied to a place">Enterprise Survey</a><a class="w hi" style="font-size:1.35rem" href="pad-pid-geospatial-evidence.html?q=District%20recovery%20assessments" title="Used in 7 projects; 100% of uses tied to a place">District recovery assessments</a><a class="w mid" style="font-size:1.65rem" href="pad-pid-geospatial-evidence.html?q=ND-GAIN" title="Used in 21 projects; 34% of uses tied to a place">ND-GAIN climate index</a><a class="w hi" style="font-size:1.45rem" href="pad-pid-geospatial-evidence.html?q=Global%20Climate%20Risk%20Index" title="Used in 11 projects; 54% of uses tied to a place">Global Climate Risk Index</a><a class="w lo" style="font-size:1.59rem" href="pad-pid-geospatial-evidence.html?q=poverty%20assessment" title="Used in 18 projects; 19% of uses tied to a place">Poverty assessments</a><a class="w lo" style="font-size:1.45rem" href="pad-pid-geospatial-evidence.html?q=national%20household" title="Used in 11 projects; 19% of uses tied to a place">National household surveys</a><a class="w mid" style="font-size:1.50rem" href="pad-pid-geospatial-evidence.html?q=living%20standards" title="Used in 13 projects; 36% of uses tied to a place">Living Standards Measurement Study</a><a class="w lo" style="font-size:1.50rem" href="pad-pid-geospatial-evidence.html?q=Global%20Findex" title="Used in 13 projects; 19% of uses tied to a place">Global Findex</a><a class="w hi" style="font-size:1.48rem" href="pad-pid-geospatial-evidence.html?q=HMIS" title="Used in 12 projects; 58% of uses tied to a place">HMIS / DHIS2</a><a class="w hi" style="font-size:1.58rem" href="pad-pid-geospatial-evidence.html?q=registr" title="Used in 17 projects; 64% of uses tied to a place">Social registries</a><a class="w mid" style="font-size:1.45rem" href="pad-pid-geospatial-evidence.html?q=MICS" title="Used in 11 projects; 27% of uses tied to a place">MICS</a><a class="w hi" style="font-size:1.63rem" href="pad-pid-geospatial-evidence.html?q=EMIS" title="Used in 20 projects; 75% of uses tied to a place">School census / EMIS</a><a class="w lo" style="font-size:1.35rem" href="pad-pid-geospatial-evidence.html?q=phone%20survey" title="Used in 7 projects; 7% of uses tied to a place">High-frequency phone surveys</a><a class="w mid" style="font-size:1.71rem" href="pad-pid-geospatial-evidence.html?q=service%20delivery" title="Used in 25 projects; 31% of uses tied to a place">Service delivery surveys / PETS</a><a class="w lo" style="font-size:1.35rem" href="pad-pid-geospatial-evidence.html?q=Global%20Competitiveness%20Index" title="Used in 7 projects; 9% of uses tied to a place">Global Competitiveness Index</a><a class="w lo" style="font-size:1.72rem" href="pad-pid-geospatial-evidence.html?q=gender" title="Used in 26 projects; 14% of uses tied to a place">Gender gap and inequality indices</a><a class="w mid" style="font-size:1.32rem" href="pad-pid-geospatial-evidence.html?q=host%20communit" title="Used in 6 projects; 44% of uses tied to a place">Refugee and host community surveys</a><a class="w lo" style="font-size:1.87rem" href="pad-pid-geospatial-evidence.html?q=Human%20Development%20Index" title="Used in 37 projects; 18% of uses tied to a place">Human Development Index</a><a class="w hi" style="font-size:1.25rem" href="pad-pid-geospatial-evidence.html?q=DTM" title="Used in 4 projects; 57% of uses tied to a place">IOM Displacement Tracking Matrix</a><a class="w lo" style="font-size:1.96rem" href="pad-pid-geospatial-evidence.html?q=Human%20Capital%20Index" title="Used in 44 projects; 16% of uses tied to a place">Human Capital Index</a><a class="w mid" style="font-size:1.25rem" href="pad-pid-geospatial-evidence.html?q=Gini%20index" title="Used in 4 projects; 25% of uses tied to a place">Gini index</a><a class="w lo" style="font-size:2.03rem" href="pad-pid-geospatial-evidence.html?q=development%20indicators" title="Used in 51 projects; 15% of uses tied to a place">World Development Indicators</a></div></div>
   </div>
+</section></div>
+  <div class="view" data-unit="documents" data-finding="Of 1,206 PADs and PIDs that use data, nearly two-thirds (64%) draw on geospatial data, mostly at the level of regions and districts; only 1 in 8 use exact locations. Under the strictest checks on the labels the share is 48%." hidden>
+<section class="panel answer" aria-labelledby="finding-document">
+  <p class="lead" id="finding-document">In <strong>nearly two-thirds of PADs and PIDs that use data</strong>
+  (771 of 1,206, 64%), teams draw on geospatial data, mostly at the level of regions and districts.
+  <span class="range">Under the strictest checks the share is 48%. <a href="#reliability">How reliable is this?</a></span></p>
+  <figure style="margin:0"><div class="waffle" role="img" aria-label="64 of every 100 data-using documents use geospatial data"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
+    <figcaption class="wcap">64 of every 100 documents that use data</figcaption></figure>
+  <ol class="steps" aria-label="How documents were counted">
+    <li class="step"><b>1,918</b>PADs and PIDs in the collection</li>
+    <li class="step"><b>1,591</b>had passages reviewed</li>
+    <li class="step"><b>1,206</b>use data in those passages</li>
+    <li class="step last"><b>771</b>use geospatial data</li>
+  </ol>
 </section>
+
+<div class="tabs" role="tablist" aria-label="Analysis, counted by document">
+  <button role="tab" id="t-reach-document" data-id="reach" aria-controls="p-reach-document" aria-selected="true">Reach<small>How widespread is it?</small></button>
+  <button role="tab" id="t-precision-document" data-id="precision" aria-controls="p-precision-document" aria-selected="false" tabindex="-1">Precision<small>How detailed is the geography?</small></button>
+  <button role="tab" id="t-sources-document" data-id="sources" aria-controls="p-sources-document" aria-selected="false" tabindex="-1">Sources<small>Which data carries it?</small></button>
+</div>
+
+<section class="panel tabpanel" role="tabpanel" id="p-reach-document" aria-labelledby="t-reach-document" tabindex="0">
+  <div class="pillar">
+    <div>
+      <h2>Mainstream in every sector and region, and under-counted</h2>
+      <p>We reviewed sampled passages, not whole documents. When we read one passage of a document, 56% show
+      geospatial data; when we read five or more, 85% do. Read in full, more documents would likely count.</p>
+      <p class="dim small">Larger, data-heavy documents also had more passages reviewed, so part of the rise reflects the documents themselves.</p>
+      <div class="sowhat"><b>So what</b>Geospatial data is already part of routine project preparation, not a specialist add-on.</div>
+    </div>
+    <figure style="margin:0"><h3>Documents using geospatial data, by passages reviewed</h3>
+      <div class="cols" role="img" aria-label="1 passages: 56%; 2 passages: 61%; 3 passages: 75%; 4 passages: 78%; 5 or more passages: 85%"><div class="col"><div class="cb"><i style="height:55.8%"></i></div><b>56%</b>1 passage<br>607 documents</div><div class="col"><div class="cb"><i style="height:61.4%"></i></div><b>61%</b>2 passages<br>264 documents</div><div class="col"><div class="cb"><i style="height:75.2%"></i></div><b>75%</b>3 passages<br>101 documents</div><div class="col"><div class="cb"><i style="height:78.1%"></i></div><b>78%</b>4 passages<br>64 documents</div><div class="col"><div class="cb"><i style="height:84.7%"></i></div><b>85%</b>5 or more passages<br>170 documents</div></div></figure>
+  </div>
+  <div class="row2">
+    <div><h3>By sector</h3><p class="dim small">From 49% in Digital Development to 77% in Water, Sanitation and Waste Management.</p>
+      <table><thead><tr><th>Primary sector</th><th class="n">documents</th><th></th><th class="n">share</th></tr></thead><tbody><tr><td>Water, Sanitation and Waste Management</td><td class="n">90</td><td class="bc"><span class="bar"><i style="width:76.7%"></i></span></td><td class="n"><b>77%</b></td></tr><tr><td>Transportation</td><td class="n">139</td><td class="bc"><span class="bar"><i style="width:74.8%"></i></span></td><td class="n"><b>75%</b></td></tr><tr><td>Health</td><td class="n">152</td><td class="bc"><span class="bar"><i style="width:66.4%"></i></span></td><td class="n"><b>66%</b></td></tr><tr><td>Social Protection</td><td class="n">148</td><td class="bc"><span class="bar"><i style="width:66.2%"></i></span></td><td class="n"><b>66%</b></td></tr><tr><td>Public Administration</td><td class="n">161</td><td class="bc"><span class="bar"><i style="width:65.2%"></i></span></td><td class="n"><b>65%</b></td></tr><tr><td>Agriculture, Fishing and Forestry</td><td class="n">103</td><td class="bc"><span class="bar"><i style="width:62.1%"></i></span></td><td class="n"><b>62%</b></td></tr><tr><td>Industry, Trade and Services</td><td class="n">49</td><td class="bc"><span class="bar"><i style="width:61.2%"></i></span></td><td class="n"><b>61%</b></td></tr><tr><td>Education</td><td class="n">147</td><td class="bc"><span class="bar"><i style="width:57.1%"></i></span></td><td class="n"><b>57%</b></td></tr><tr><td>Energy and Extractives</td><td class="n">96</td><td class="bc"><span class="bar"><i style="width:53.1%"></i></span></td><td class="n"><b>53%</b></td></tr><tr><td>Financial Sector</td><td class="n">44</td><td class="bc"><span class="bar"><i style="width:52.3%"></i></span></td><td class="n"><b>52%</b></td></tr><tr><td>Digital Development</td><td class="n">59</td><td class="bc"><span class="bar"><i style="width:49.2%"></i></span></td><td class="n"><b>49%</b></td></tr></tbody></table></div>
+    <div><h3>By region</h3><p class="dim small">A narrow spread, 60% to 70%.</p>
+      <table><thead><tr><th>Region</th><th class="n">documents</th><th></th><th class="n">share</th></tr></thead><tbody><tr><td>Western and Central Africa</td><td class="n">168</td><td class="bc"><span class="bar"><i style="width:70.2%"></i></span></td><td class="n"><b>70%</b></td></tr><tr><td>Middle East, North Africa, Afghanistan, and Pakistan</td><td class="n">140</td><td class="bc"><span class="bar"><i style="width:70.0%"></i></span></td><td class="n"><b>70%</b></td></tr><tr><td>Latin America and Caribbean</td><td class="n">152</td><td class="bc"><span class="bar"><i style="width:65.1%"></i></span></td><td class="n"><b>65%</b></td></tr><tr><td>South Asia</td><td class="n">73</td><td class="bc"><span class="bar"><i style="width:64.4%"></i></span></td><td class="n"><b>64%</b></td></tr><tr><td>East Asia and Pacific</td><td class="n">122</td><td class="bc"><span class="bar"><i style="width:63.1%"></i></span></td><td class="n"><b>63%</b></td></tr><tr><td>Europe and Central Asia</td><td class="n">133</td><td class="bc"><span class="bar"><i style="width:60.2%"></i></span></td><td class="n"><b>60%</b></td></tr><tr><td>Eastern and Southern Africa</td><td class="n">409</td><td class="bc"><span class="bar"><i style="width:59.9%"></i></span></td><td class="n"><b>60%</b></td></tr></tbody></table></div>
+  </div>
+</section>
+
+<section class="panel tabpanel" role="tabpanel" id="p-precision-document" aria-labelledby="t-precision-document" tabindex="0" hidden>
+  <div class="pillar">
+    <div>
+      <h2>Geography mostly stops at the district or region</h2>
+      <p>Each data-using document is placed by the most precise geography it shows. 51% go down to a named area such as a
+      region, district or camp. 13% use exact locations: facilities, stations, parcels.
+      Map- and satellite-derived figures are rare.</p>
+      <div class="sowhat"><b>So what</b>The next step up is precise location data: exact sites, maps and satellite products,
+      where new tools and guidance would change practice most.</div>
+    </div>
+    <div>
+      <div class="stack" role="img" aria-label="Share of data-using documents by most precise geography"><i style="width:12.8%;background:#1e3a8a" title="Exact locations"></i><i style="width:50.6%;background:#4f46e5" title="Administrative or named areas"></i><i style="width:0.6%;background:#8b5cf6" title="Map- or satellite-derived figures"></i><i style="width:7.1%;background:#9fb0c9" title="Data used, place not stated"></i><i style="width:28.9%;background:#d3ddeb" title="Only national or non-spatial figures"></i></div>
+      <table><thead><tr><th>Most precise geography in the document</th><th class="n">documents</th><th class="n">share</th></tr></thead><tbody><tr><td><span class="sw" style="background:#1e3a8a"></span>Exact locations</td><td class="n">154</td><td class="n"><b>13%</b></td></tr><tr><td><span class="sw" style="background:#4f46e5"></span>Administrative or named areas</td><td class="n">610</td><td class="n"><b>51%</b></td></tr><tr><td><span class="sw" style="background:#8b5cf6"></span>Map- or satellite-derived figures</td><td class="n">7</td><td class="n"><b>1%</b></td></tr><tr><td><span class="sw" style="background:#9fb0c9"></span>Data used, place not stated</td><td class="n">86</td><td class="n"><b>7%</b></td></tr><tr><td><span class="sw" style="background:#d3ddeb"></span>Only national or non-spatial figures</td><td class="n">349</td><td class="n"><b>29%</b></td></tr></tbody></table>
+    </div>
+  </div>
+  <div class="row2" style="grid-template-columns:1fr">
+    <div><h3>What each level looks like in a document</h3><div class="ex"><figure style="border-left-color:#1e3a8a"><figcaption>Exact location: HYDATA database</figcaption><blockquote>“Surface water data are maintained through a hydata database in dwrm. stations are equipped with staff gauges”</blockquote><cite>Uganda — Water, Sanitation and Waste Management project</cite></figure><figure style="border-left-color:#4f46e5"><figcaption>Named area: UNHCR Statistics package</figcaption><blockquote>“271,995 in Kakuma Camp and Kalobeyei Settlement in Turkana County”</blockquote><cite>Kenya — Health project</cite></figure><figure style="border-left-color:#8b5cf6"><figcaption>Map or satellite-derived: high-resolution gridded data of month-by-month variation in climate</figcaption><blockquote>“High-resolution gridded data of month-by-month variation in climate (jan. 1901- dec. 2016)”</blockquote><cite>Uganda — Transportation project</cite></figure><figure style="border-left-color:#d3ddeb"><figcaption>National figure only: Regulatory Indicators for Sustainable Energy (2019)</figcaption><blockquote>“Uganda is in green zone alongside a number of east african peers as highlighted in regulatory indicators for sustainable energy (2019)”</blockquote><cite>Uganda — Energy and Extractives project</cite></figure></div></div>
+  </div>
+</section>
+
+<section class="panel tabpanel" role="tabpanel" id="p-sources-document" aria-labelledby="t-sources-document" tabindex="0" hidden>
+  <div class="pillar">
+    <div>
+      <h2>Censuses and sector records carry the geography; big surveys are quoted as national totals</h2>
+      <p>Uses of population censuses (68%), infrastructure records (61%) and climate and weather data (72%) are usually tied to a place.</p>
+      <p>Enterprise surveys (11%), labour force surveys (15%) and Demographic and Health Surveys (21%) are cited in many documents, but mostly as national figures, even though their data
+      usually holds regional or district detail.</p>
+      <p>Maps, GIS and satellite data are almost always tied to a place (97%),
+      but appear in fewer than 4 in 100 documents.</p>
+      <div class="sowhat"><b>So what</b>The fastest gain needs no new data: use the regional and district breakdowns
+      already in the surveys teams cite.</div>
+    </div>
+    <div><h3>Share of uses tied to a place, by kind of data</h3>
+      <table><thead><tr><th>Kind of data</th><th class="n">documents</th><th></th><th class="n">tied to a place</th></tr></thead><tbody><tr class=""><td>Maps, GIS and cadastre</td><td class="n">39</td><td class="bc"><span class="bar"><i style="width:96.6%"></i></span></td><td class="n"><b>97%</b></td></tr><tr class=""><td>Education records (EMIS, school census)</td><td class="n">25</td><td class="bc"><span class="bar"><i style="width:72.7%"></i></span></td><td class="n"><b>73%</b></td></tr><tr class=""><td>Climate, weather and hydrology</td><td class="n">38</td><td class="bc"><span class="bar"><i style="width:72.5%"></i></span></td><td class="n"><b>72%</b></td></tr><tr class=""><td>Population census</td><td class="n">115</td><td class="bc"><span class="bar"><i style="width:67.8%"></i></span></td><td class="n"><b>68%</b></td></tr><tr class=""><td>Agriculture and land</td><td class="n">33</td><td class="bc"><span class="bar"><i style="width:67.5%"></i></span></td><td class="n"><b>68%</b></td></tr><tr class=""><td>Health records (HMIS, DHIS2)</td><td class="n">20</td><td class="bc"><span class="bar"><i style="width:63.9%"></i></span></td><td class="n"><b>64%</b></td></tr><tr class=""><td>Infrastructure and asset records</td><td class="n">63</td><td class="bc"><span class="bar"><i style="width:61.0%"></i></span></td><td class="n"><b>61%</b></td></tr><tr class=""><td>Refugee and displacement data</td><td class="n">68</td><td class="bc"><span class="bar"><i style="width:54.2%"></i></span></td><td class="n"><b>54%</b></td></tr><tr class=""><td>Project monitoring and baseline data</td><td class="n">121</td><td class="bc"><span class="bar"><i style="width:50.3%"></i></span></td><td class="n"><b>50%</b></td></tr><tr class=""><td>Social registries and beneficiary data</td><td class="n">44</td><td class="bc"><span class="bar"><i style="width:42.3%"></i></span></td><td class="n"><b>42%</b></td></tr><tr class=""><td>Household budget and living-standards surveys</td><td class="n">74</td><td class="bc"><span class="bar"><i style="width:37.4%"></i></span></td><td class="n"><b>37%</b></td></tr><tr class="opp"><td>Poverty and food-security assessments</td><td class="n">80</td><td class="bc"><span class="bar"><i style="width:27.9%"></i></span></td><td class="n"><b>28%</b></td></tr><tr class=""><td>Global indices and country statistics</td><td class="n">319</td><td class="bc"><span class="bar"><i style="width:24.3%"></i></span></td><td class="n"><b>24%</b></td></tr><tr class="opp"><td>Demographic and Health Surveys</td><td class="n">57</td><td class="bc"><span class="bar"><i style="width:20.9%"></i></span></td><td class="n"><b>21%</b></td></tr><tr class="opp"><td>Labour force surveys</td><td class="n">31</td><td class="bc"><span class="bar"><i style="width:15.0%"></i></span></td><td class="n"><b>15%</b></td></tr><tr class="opp"><td>Enterprise and firm surveys</td><td class="n">38</td><td class="bc"><span class="bar"><i style="width:10.9%"></i></span></td><td class="n"><b>11%</b></td></tr><tr class="rest"><td>Administrative and other records</td><td class="n">729</td><td class="bc"><span class="bar"><i style="width:39.3%"></i></span></td><td class="n"><b>39%</b></td></tr><tr class="rest"><td>Other surveys and assessments</td><td class="n">335</td><td class="bc"><span class="bar"><i style="width:41.5%"></i></span></td><td class="n"><b>42%</b></td></tr></tbody></table>
+      <p class="dim small" style="margin-top:8px">Amber: surveys quoted mostly as national totals. Grey: sources too general to classify.</p></div>
+  </div>
+  <div class="row2" style="grid-template-columns:1fr">
+    <div><h3>Named sources teams rely on</h3>
+      <p class="dim small">Size shows how many documents use the source; colour shows how often it is used with a place.
+      Select a name to read the passages.</p>
+      <ul class="key"><li style="--c:#312e81">mostly with a place (50%+)</li><li style="--c:#3f5fa8">sometimes (25–49%)</li>
+        <li style="--c:#6a7c9e">rarely (under 25%)</li></ul>
+      <div class="cloud"><a class="w hi" style="font-size:2.55rem" href="pad-pid-geospatial-evidence.html?q=census" title="Used in 115 documents; 68% of uses tied to a place">Population census</a><a class="w mid" style="font-size:1.25rem" href="pad-pid-geospatial-evidence.html?q=Gini%20index" title="Used in 4 documents; 25% of uses tied to a place">Gini index</a><a class="w lo" style="font-size:2.02rem" href="pad-pid-geospatial-evidence.html?q=development%20indicators" title="Used in 51 documents; 15% of uses tied to a place">World Development Indicators</a><a class="w lo" style="font-size:1.28rem" href="pad-pid-geospatial-evidence.html?q=Logistics%20Performance%20Index" title="Used in 5 documents; 0% of uses tied to a place">Logistics Performance Index</a><a class="w mid" style="font-size:1.88rem" href="pad-pid-geospatial-evidence.html?q=expenditure" title="Used in 39 documents; 46% of uses tied to a place">Household budget and expenditure surveys</a><a class="w hi" style="font-size:1.32rem" href="pad-pid-geospatial-evidence.html?q=DTM" title="Used in 6 documents; 57% of uses tied to a place">IOM Displacement Tracking Matrix</a><a class="w lo" style="font-size:1.78rem" href="pad-pid-geospatial-evidence.html?q=force%20survey" title="Used in 31 documents; 15% of uses tied to a place">Labour Force Survey</a><a class="w hi" style="font-size:1.34rem" href="pad-pid-geospatial-evidence.html?q=District%20recovery%20assessments" title="Used in 7 documents; 100% of uses tied to a place">District recovery assessments</a><a class="w lo" style="font-size:1.75rem" href="pad-pid-geospatial-evidence.html?q=gender" title="Used in 29 documents; 14% of uses tied to a place">Gender gap and inequality indices</a><a class="w hi" style="font-size:1.44rem" href="pad-pid-geospatial-evidence.html?q=Global%20Climate%20Risk%20Index" title="Used in 11 documents; 54% of uses tied to a place">Global Climate Risk Index</a><a class="w mid" style="font-size:1.70rem" href="pad-pid-geospatial-evidence.html?q=service%20delivery" title="Used in 25 documents; 31% of uses tied to a place">Service delivery surveys / PETS</a><a class="w lo" style="font-size:1.49rem" href="pad-pid-geospatial-evidence.html?q=phone%20survey" title="Used in 13 documents; 7% of uses tied to a place">High-frequency phone surveys</a><a class="w hi" style="font-size:1.63rem" href="pad-pid-geospatial-evidence.html?q=EMIS" title="Used in 21 documents; 75% of uses tied to a place">School census / EMIS</a><a class="w mid" style="font-size:1.51rem" href="pad-pid-geospatial-evidence.html?q=host%20communit" title="Used in 14 documents; 44% of uses tied to a place">Refugee and host community surveys</a><a class="w hi" style="font-size:1.60rem" href="pad-pid-geospatial-evidence.html?q=registr" title="Used in 19 documents; 64% of uses tied to a place">Social registries</a><a class="w hi" style="font-size:1.53rem" href="pad-pid-geospatial-evidence.html?q=HMIS" title="Used in 15 documents; 58% of uses tied to a place">HMIS / DHIS2</a><a class="w lo" style="font-size:1.53rem" href="pad-pid-geospatial-evidence.html?q=Global%20Findex" title="Used in 15 documents; 19% of uses tied to a place">Global Findex</a><a class="w lo" style="font-size:1.62rem" href="pad-pid-geospatial-evidence.html?q=poverty%20assessment" title="Used in 20 documents; 19% of uses tied to a place">Poverty assessments</a><a class="w mid" style="font-size:1.49rem" href="pad-pid-geospatial-evidence.html?q=living%20standards" title="Used in 13 documents; 36% of uses tied to a place">Living Standards Measurement Study</a><a class="w lo" style="font-size:1.67rem" href="pad-pid-geospatial-evidence.html?q=national%20household" title="Used in 23 documents; 19% of uses tied to a place">National household surveys</a><a class="w mid" style="font-size:1.47rem" href="pad-pid-geospatial-evidence.html?q=MICS" title="Used in 12 documents; 27% of uses tied to a place">MICS</a><a class="w mid" style="font-size:1.71rem" href="pad-pid-geospatial-evidence.html?q=ND-GAIN" title="Used in 26 documents; 34% of uses tied to a place">ND-GAIN climate index</a><a class="w lo" style="font-size:1.40rem" href="pad-pid-geospatial-evidence.html?q=Global%20Competitiveness%20Index" title="Used in 9 documents; 9% of uses tied to a place">Global Competitiveness Index</a><a class="w lo" style="font-size:1.77rem" href="pad-pid-geospatial-evidence.html?q=Enterprise%20Survey" title="Used in 30 documents; 8% of uses tied to a place">Enterprise Survey</a><a class="w hi" style="font-size:1.34rem" href="pad-pid-geospatial-evidence.html?q=satellite" title="Used in 7 documents; 100% of uses tied to a place">Satellite and remote-sensing data</a><a class="w lo" style="font-size:1.88rem" href="pad-pid-geospatial-evidence.html?q=Human%20Development%20Index" title="Used in 39 documents; 18% of uses tied to a place">Human Development Index</a><a class="w lo" style="font-size:1.28rem" href="pad-pid-geospatial-evidence.html?q=National%20Health%20Accounts" title="Used in 5 documents; 0% of uses tied to a place">National Health Accounts</a><a class="w lo" style="font-size:2.01rem" href="pad-pid-geospatial-evidence.html?q=Human%20Capital%20Index" title="Used in 50 documents; 16% of uses tied to a place">Human Capital Index</a><a class="w lo" style="font-size:1.25rem" href="pad-pid-geospatial-evidence.html?q=Global%20Health%20Security%20Index" title="Used in 4 documents; 0% of uses tied to a place">Global Health Security Index</a><a class="w lo" style="font-size:2.08rem" href="pad-pid-geospatial-evidence.html?q=health%20survey" title="Used in 57 documents; 21% of uses tied to a place">Demographic and Health Survey</a></div></div>
+  </div>
+</section></div>
+</div>
 
 <section class="panel method" aria-labelledby="h-method">
   <h2 id="h-method">How this was measured</h2>
+  <details><summary>Projects or documents?</summary>
+    <p>A project usually has more than one PAD or PID. <b>Projects</b> count a project once: it uses geospatial data if
+    any of its reviewed documents does. <b>Documents</b> count each PAD or PID on its own. The project view is the
+    reporting unit, because region, sector and approval year belong to the project. The project share is higher because
+    a project has more text in which geospatial data can appear.</p></details>
   <details><summary>What counts as geospatial data?</summary>
     <p>Data the document ties to a place: an exact location (a school, a gauge, a village), a named area (a region,
     district, camp or an urban/rural split; admin level 1 or 2 is enough), or a figure derived from maps or satellite
     imagery. Coordinates are not required. A topic such as agriculture or displacement does not count on its own.</p></details>
   <details><summary>What counts as using data?</summary>
     <p>Each data mention was reviewed for use: does the passage rely on existing data, or only name it, plan to collect it,
-    or cite a bare figure? Only mentions judged as used count. A project counts once, however many of its documents or
-    sources show geospatial data.
-    Most judgements are reviewer proposals; where a senior reviewer ruled, that ruling applies.</p></details>
-  <details><summary>Why count projects, not datasets?</summary>
+    or cite a bare figure? Only mentions judged as used count. Most judgements are reviewer proposals; where a senior
+    reviewer ruled, that ruling applies.</p></details>
+  <details><summary>Why not count datasets?</summary>
     <p>The same dataset is named many ways (“DHS”, “2016 UDHS”, “Demographic and Health Survey”), so counts of distinct
-    datasets are unreliable. Whether a project uses geospatial data is a clear yes or no, and region, sector and
-    approval year belong to the project. Source names are merged
-    across spellings for display only.</p></details>
+    datasets are unreliable. Whether a project or document uses geospatial data is a clear yes or no. Source names are
+    merged across spellings for display only.</p></details>
   <details id="reliability"><summary>How reliable are these figures?</summary>
     <p>Every number is counted from the review records; none is typed in. An AI-assisted reviewer labelled each data
     mention against a written rubric and quoted the passage words behind each place label. People have not yet checked
     the place labels, and 8 of 4,094 judgements that data was used carry a senior
     reviewer's ruling.</p>
-    <p>Under stricter rules the share falls. Dropping labels the reviewer marked as uncertain gives
-    66%. Also requiring the quoted evidence to appear word for word in the passage gives
-    53%. That second rule is harsh, because quotes taken from tables often reorder the cells.
-    A defensible statement is <b>between 53% and 68%</b>. A person should
-    check a random sample of projects before the figure is cited externally.</p></details>
+    <p>Under stricter rules the share falls. For projects it is 66% without uncertain labels and 53% when the quoted evidence must also match word for word; for documents, 62% without uncertain labels and 48% when the quoted evidence must also match word for word. The word-for-word
+    rule is harsh, because quotes taken from tables often reorder the cells. A defensible statement is <b>between
+    53% and 68% of projects</b>. A person should check a random sample of
+    projects before the figure is cited externally.</p></details>
   <details><summary>Coverage and limits</summary>
     <p>1,204 of 1,348 projects had passages reviewed, through 1,591 of their
-    1,918 PADs and PIDs. 828 of the 966 data-using projects were approved in 2020 or later,
-    so this describes recent practice and does not show a trend. Sector and region come from the World Bank Projects API;
-    sectors and regions with fewer than 40 projects are not shown. Kinds of data are grouped from source names; their
-    "tied to a place" share counts individual uses. Reviews combined: Council-reviewed sample (73 passages); Refugee-project documents (588 passages); Human-reviewed sample (1,034 passages); PAD/PID review — original sample (1,796 passages); PAD/PID review — 500-passage addition (314 passages).</p></details>
+    1,918 PADs and PIDs. 828 of the 966 data-using projects were approved in 2020 or
+    later, so this describes recent practice and does not show a trend. Sector and region come from the World Bank Projects
+    API; sectors and regions with fewer than 40 projects or documents are not shown. Kinds of data are grouped from source
+    names; their "tied to a place" share counts individual uses. Reviews combined: Council-reviewed sample (73 passages); Refugee-project documents (588 passages); Human-reviewed sample (1,034 passages); PAD/PID review — original sample (1,799 passages); PAD/PID review — 500-passage addition (314 passages).</p></details>
 </section>
 <footer><a href="pad-pid-geospatial-evidence.html">Read every passage behind these figures</a>. Filter by project, country or data source.</footer>
 </main>
 <script>
-const tabs = [...document.querySelectorAll('[role=tab]')];
-const isTab = id => tabs.some(t => t.dataset.id === id);
-function show(id, focus, user) {
-  if (!isTab(id)) id = tabs[0].dataset.id;
-  for (const t of tabs) {
-    const on = t.dataset.id === id;
+const views = [...document.querySelectorAll('.view')];
+const units = views.map(v => v.dataset.unit);
+const pillars = ['reach', 'precision', 'sources'];
+const unitBtns = [...document.querySelectorAll('[data-unit-btn]')];
+const state = {unit: units[0], pillar: pillars[0]};
+const active = () => views.find(v => v.dataset.unit === state.unit);
+function render(focusTab) {
+  views.forEach(v => { v.hidden = v.dataset.unit !== state.unit; });
+  unitBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.unitBtn === state.unit)));
+  for (const t of active().querySelectorAll('[role=tab]')) {
+    const on = t.dataset.id === state.pillar;
     t.setAttribute('aria-selected', String(on));
     t.tabIndex = on ? 0 : -1;
     document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
-    if (on && focus) t.focus();
+    if (on && focusTab) t.focus();
   }
-  if (location.hash.slice(1) !== id && (user || isTab(location.hash.slice(1)) || !location.hash))
-    history.replaceState(null, '', '#' + id);
 }
-function openNote() {
-  const note = document.getElementById(location.hash.slice(1));
+function go(next, focusTab) {
+  Object.assign(state, next);
+  history.replaceState(null, '', '#' + state.unit + '-' + state.pillar);
+  render(focusTab);
+}
+/* hash: "#documents-sources", "#sources" (keeps unit), or a note id such as "#reliability" */
+function fromHash() {
+  const h = location.hash.slice(1), [a, b] = h.split('-');
+  if (units.includes(a) && (!b || pillars.includes(b))) return go({unit: a, pillar: b || state.pillar});
+  if (pillars.includes(h)) return go({pillar: h});
+  render();
+  const note = h && document.getElementById(h);
   if (note && note.tagName === 'DETAILS') { note.open = true; note.scrollIntoView({block: 'start'}); }
 }
-tabs.forEach((t, i) => {
-  t.addEventListener('click', () => show(t.dataset.id, false, true));
+unitBtns.forEach((b, i) => {
+  b.addEventListener('click', () => go({unit: b.dataset.unitBtn}));
+  b.addEventListener('keydown', e => {
+    const k = {ArrowRight: i + 1, ArrowLeft: i - 1}[e.key];
+    if (k === undefined) return;
+    e.preventDefault();
+    const next = unitBtns[(k + unitBtns.length) % unitBtns.length];
+    go({unit: next.dataset.unitBtn}); next.focus();
+  });
+});
+views.forEach(v => v.querySelectorAll('[role=tab]').forEach((t, i, tabs) => {
+  t.addEventListener('click', () => go({pillar: t.dataset.id}));
   t.addEventListener('keydown', e => {
     const k = {ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1}[e.key];
     if (k === undefined) return;
     e.preventDefault();
-    show(tabs[(k + tabs.length) % tabs.length].dataset.id, true, true);
+    go({pillar: tabs[(k + tabs.length) % tabs.length].dataset.id}, true);
   });
-});
-addEventListener('hashchange', () => isTab(location.hash.slice(1)) ? show(location.hash.slice(1)) : openNote());
-show(location.hash.slice(1));
-openNote();
+}));
+addEventListener('hashchange', fromHash);
+fromHash();
 document.getElementById('copy').addEventListener('click', async () => {
-  const text = document.getElementById('copy').dataset.text;
   const out = document.getElementById('copied');
-  try { await navigator.clipboard.writeText(text); out.textContent = 'Copied to clipboard.'; }
+  try { await navigator.clipboard.writeText(active().dataset.finding); out.textContent = 'Copied to clipboard.'; }
   catch { out.textContent = 'Copy is blocked in this browser. Select the sentence and copy it instead.'; }
 });
 </script>
