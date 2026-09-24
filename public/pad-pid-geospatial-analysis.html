@@ -196,10 +196,13 @@ document.getElementById('lead-n').textContent = R.related_total;
 const newSource = (R.review_sources || []).find(x => x.id === 'umar_pads_500');
 if (newSource) {
   const note = document.getElementById('sourceUpdate');
+  const existingLinked = (R.review_sources || []).filter(x => x.id !== newSource.id)
+    .reduce((total, x) => total + x.linked, 0);
   note.hidden = false;
-  note.innerHTML = `<h3>New data included</h3><p>This update adds ${newSource.passages} reviewed passages from the
-    <b>${esc(newSource.label)}</b>. ${newSource.matched_passages} matched a PAD or PID in the document list;
-    they add <b>${newSource.linked} mentions tied to a place</b> to the totals below.</p>`;
+  note.innerHTML = `<h3>New sample added to existing reviews</h3><p>We added ${newSource.passages} reviewed passages from the
+    <b>${esc(newSource.label)}</b> alongside the earlier review sets. ${newSource.matched_passages} matched a PAD or PID record.
+    The new sample adds ${newSource.linked} of ${R.related_total} place-linked mentions; earlier reviews contribute
+    ${existingLinked}. Totals above combine all ${R.review_sources.length} review sources and ${S.in_type_mentions} PAD/PID data mentions.</p>`;
 }
 document.getElementById('kpis').innerHTML = [
   [R.related_total, `mentions tied to a place (${R.related_rate}% of ${S.in_type_mentions} mentions)`],
