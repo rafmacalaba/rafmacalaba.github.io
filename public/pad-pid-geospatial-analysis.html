@@ -90,32 +90,32 @@ html[data-theme=dark] mark { background:#b98b1f; color:#0b0d12; }
 }
 </style></head><body>
 <header>
-  <h1>Can this document’s data be tied to a place?</h1>
-  <div class="sub">A plain-language look at Project Appraisal and Project Information Documents.</div>
+  <h1>Geographic detail in World Bank project documents</h1>
+  <div class="sub">Do Project Appraisal Documents (PADs) and Project Information Documents (PIDs) say where their cited data applies?</div>
   <button class="theme" id="theme">Dark mode</button>
 </header>
 <main>
-<p class="lede">We reviewed <b>6,470 passages</b> across the geospatial review. <b>3,804</b>
-matched a Project Appraisal or Project Information Document, covering <b>6,503 data mentions</b>.
-<b id="lead-n"></b> of those mentions are tied to a place such as a district, a monitoring station or a mapped area.</p>
+<p class="lede">We combined annotations from <b id="sourceCount"></b> review sets. In <b>3,804</b>
+reviewed PAD/PID passages, we found <b>6,503 mentions of data</b>. <b id="lead-n"></b> mentions
+include enough evidence to connect the data to a geographic place.</p>
 
-<div class="note" id="sourceUpdate" hidden></div>
 <div class="note">
-  <h3>How to read this page</h3>
-  <p>Each mention is one place where a document names data. “Tied to a place” means the passage gives
-  enough detail to connect the data to a location. “Place not stated” means the document does not say
-  where the data applies; it does <em>not</em> prove that the data has no geography.</p>
-  <p>This page describes what the documents say. It does not rate the projects or verify that the data
-  can be joined to an actual map.</p>
+  <h3>Start here</h3>
+  <p>A <em>data mention</em> is one place in a passage where a source or type of data is named. “Place-linked”
+  means the passage gives enough evidence to connect that data to a location. “Place not stated” means the
+  text does not say where the data applies; it does <em>not</em> prove that the data has no geography.</p>
+  <p>These counts describe what the documents say. They do not rate the projects or confirm that source data
+  can be joined to a map.</p>
 </div>
+<div class="note" id="sourceUpdate" hidden></div>
 
 <div class="kpis" id="kpis"></div>
 
-<h2>The short answer</h2>
+<h2>The answer</h2>
 <div class="insights" id="insights"></div>
 <p class="meta" id="insightNote"></p>
 
-<h2>What “tied to a place” means</h2>
+<h2>What counts as place-linked?</h2>
 <div class="legend" id="legend"></div>
 
 <div class="cols" style="margin-top:18px">
@@ -124,7 +124,7 @@ matched a Project Appraisal or Project Information Document, covering <b>6,503 d
     <p class="meta">Grouped from the words in the passage. One mention may fit more than one group.</p></div>
 </div>
 
-<h2>Where the reviewed mentions appear</h2>
+<h2>Where do place-linked mentions appear?</h2>
 <div class="card" id="byType"></div>
 <div class="cols" style="margin-top:14px">
   <div class="card" id="lanes"></div>
@@ -132,18 +132,18 @@ matched a Project Appraisal or Project Information Document, covering <b>6,503 d
   <div class="card" id="countries"></div>
 </div>
 
-<h2>Projects with the most place-linked mentions</h2>
+<h2>Which projects have the most place-linked mentions?</h2>
 <div class="card" id="projects"></div>
 
-<h2>Place details mentioned in the evidence</h2>
+<h2>Which location details appear in the passages?</h2>
 <div class="card" id="vocab"></div>
 
-<h2>Data sources linked to a place</h2>
+<h2>Which named data sources are linked to a place?</h2>
 <div class="card" id="sources"></div>
 
-<h2>Examples: data mentions linked to a place <span class="meta" id="mcount"></span></h2>
-<p class="sub">Filter by document or project, or search for a place or data source. Each example quotes the
-source document. Choose <b>Read full passage</b> to see the phrase in context.</p>
+<h2>Passages behind the place-linked mentions <span class="meta" id="mcount"></span></h2>
+<p class="sub">Filter by document or project, or search for a location or source name. Each example includes
+quoted evidence; choose <b>Read full passage</b> to see it in context.</p>
 <div class="controls">
   <span id="clsFilters"></span>
   <label>document type <select id="fDt"><option value="">all</option></select></label>
@@ -193,16 +193,17 @@ const rows = (arr, max, color) => `<table><tbody>${arr.map(x =>
 const S = R.stats;
 
 document.getElementById('lead-n').textContent = R.related_total;
+document.getElementById('sourceCount').textContent = R.review_sources.length;
 const newSource = (R.review_sources || []).find(x => x.id === 'umar_pads_500');
 if (newSource) {
   const note = document.getElementById('sourceUpdate');
   const existingLinked = (R.review_sources || []).filter(x => x.id !== newSource.id)
     .reduce((total, x) => total + x.linked, 0);
   note.hidden = false;
-  note.innerHTML = `<h3>New sample added to existing reviews</h3><p>We added ${newSource.passages} reviewed passages from the
-    <b>${esc(newSource.label)}</b> alongside the earlier review sets. ${newSource.matched_passages} matched a PAD or PID record.
-    The new sample adds ${newSource.linked} of ${R.related_total} place-linked mentions; earlier reviews contribute
-    ${existingLinked}. Totals above combine all ${R.review_sources.length} review sources and ${S.in_type_mentions} PAD/PID data mentions.</p>`;
+  note.innerHTML = `<h3>This sample was added, not substituted</h3><p>The new review includes ${newSource.passages} passages from
+    <b>${esc(newSource.label)}</b>; ${newSource.matched_passages} match PAD/PID records. It contributes ${newSource.linked} place-linked mentions.
+    Earlier review sets contribute ${existingLinked}. Together, all ${R.review_sources.length} sets contribute ${R.related_total} place-linked
+    mentions among ${S.in_type_mentions} PAD/PID data mentions.</p>`;
 }
 document.getElementById('kpis').innerHTML = [
   [R.related_total, `mentions tied to a place (${R.related_rate}% of ${S.in_type_mentions} mentions)`],
