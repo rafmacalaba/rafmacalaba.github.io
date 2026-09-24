@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Geospatial data in World Bank project documents</title>
-<meta name="description" content="Across 1,206 World Bank Project Appraisal and Project Information Documents that use data, two-thirds (64%) draw on geospatial data, mostly at the level of regions and districts; only 1 in 8 use exact locations. Because only sampled passages were reviewed, the true share is likely higher.">
+<meta name="description" content="Across 1,206 World Bank Project Appraisal and Project Information Documents that use data, nearly two-thirds (64%) draw on geospatial data, mostly at the level of regions and districts; only 1 in 8 use exact locations. Under the strictest checks on the labels the share is 48%.">
 <meta name="theme-color" content="#d9ebfc"><style>
 :root { --ink:#0f1f3d; --dim:#44557a; --line:#d4e0f0; --panel:#ffffff; --indigo:#4338ca; --navy:#1e3a8a;
   --track:#e6edf7; --opp:#b45309; --focus:#1d4ed8; }
@@ -22,6 +22,7 @@ h1 { font-size:clamp(28px,3.2vw,38px); line-height:1.15; letter-spacing:-.02em; 
 .answer { display:grid; grid-template-columns:minmax(0,1fr) 172px; gap:40px; padding:26px 34px 22px; align-items:center; }
 .lead { font-size:clamp(22px,2.4vw,30px); line-height:1.35; font-weight:500; margin:0; max-width:36ch; text-wrap:pretty; }
 .lead strong { color:var(--indigo); font-weight:700; }
+.range { display:block; margin-top:12px; font-size:16px; font-weight:400; color:var(--dim); }
 .waffle { display:grid; grid-template-columns:repeat(10,1fr); gap:3px; }
 .waffle i { aspect-ratio:1; border-radius:3px; background:var(--track); }
 .waffle i.on { background:var(--indigo); }
@@ -116,12 +117,13 @@ footer { margin-top:22px; font-size:15.5px; color:var(--dim); }
 <header>
   <div><h1>How often do World Bank projects use geospatial data?</h1>
     <p class="kicker">Evidence from 1,591 Project Appraisal and Project Information Documents</p></div>
-  <div><button class="copy" id="copy" type="button" data-text="Across 1,206 World Bank Project Appraisal and Project Information Documents that use data, two-thirds (64%) draw on geospatial data, mostly at the level of regions and districts; only 1 in 8 use exact locations. Because only sampled passages were reviewed, the true share is likely higher.">Copy the key finding</button><span id="copied" aria-live="polite"></span></div>
+  <div><button class="copy" id="copy" type="button" data-text="Across 1,206 World Bank Project Appraisal and Project Information Documents that use data, nearly two-thirds (64%) draw on geospatial data, mostly at the level of regions and districts; only 1 in 8 use exact locations. Under the strictest checks on the labels the share is 48%.">Copy the key finding</button><span id="copied" aria-live="polite"></span></div>
 </header>
 
 <section class="panel answer" aria-labelledby="finding">
-  <p class="lead" id="finding">In <strong>two-thirds of project documents that use data</strong>
-  (771 of 1,206), teams draw on geospatial data, mostly at the level of regions and districts.</p>
+  <p class="lead" id="finding">In <strong>nearly two-thirds of project documents that use data</strong>
+  (771 of 1,206, 64%), teams draw on geospatial data, mostly at the level of regions and districts.
+  <span class="range">Under the strictest checks the share is 48%. <a href="#reliability">How reliable is this?</a></span></p>
   <figure style="margin:0"><div class="waffle" role="img" aria-label="64 of every 100 data-using documents use geospatial data"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
     <figcaption class="wcap">64 of every 100 documents that use data</figcaption></figure>
   <ol class="steps" aria-label="How documents were counted">
@@ -143,7 +145,7 @@ footer { margin-top:22px; font-size:15.5px; color:var(--dim); }
     <div>
       <h2>Mainstream in every sector and region, and under-counted</h2>
       <p>We reviewed sampled passages, not whole documents. When we read one passage, 56% of documents show
-      geospatial data; when we read five or more, 86% do. The 64% headline is a floor.</p>
+      geospatial data; when we read five or more, 86% do. Read in full, more documents would likely count.</p>
       <p class="dim small">Longer, data-heavy documents also had more passages reviewed, so part of the rise reflects the documents themselves.</p>
       <div class="sowhat"><b>So what</b>Geospatial data is already part of routine project preparation, not a specialist add-on.</div>
     </div>
@@ -218,6 +220,16 @@ footer { margin-top:22px; font-size:15.5px; color:var(--dim); }
     <p>The same dataset is named many ways (“DHS”, “2016 UDHS”, “Demographic and Health Survey”), so counts of distinct
     datasets are unreliable. Whether a document uses geospatial data is a clear yes or no. Source names are merged
     across spellings for display only.</p></details>
+  <details id="reliability"><summary>How reliable are these figures?</summary>
+    <p>Every number is counted from the review records; none is typed in. An AI-assisted reviewer labelled each data
+    mention against a written rubric and quoted the passage words behind each place label. People have not yet checked
+    the place labels, and 8 of 4,094 judgements that data was used carry a senior
+    reviewer's ruling.</p>
+    <p>Under stricter rules the share falls. Dropping labels the reviewer marked as uncertain gives
+    62%. Also requiring the quoted evidence to appear word for word in the passage gives
+    48%. That second rule is harsh, because quotes taken from tables often reorder the cells.
+    A defensible statement is <b>between 48% and 64%</b>. A person should
+    check a random sample of documents before the figure is cited externally.</p></details>
   <details><summary>Coverage and limits</summary>
     <p>1,591 of 1,918 PADs and PIDs had passages reviewed, from 966 projects that use
     data. 1,059 of the 1,206 data-using documents come from projects approved in 2020 or later, so this
@@ -228,8 +240,9 @@ footer { margin-top:22px; font-size:15.5px; color:var(--dim); }
 </main>
 <script>
 const tabs = [...document.querySelectorAll('[role=tab]')];
-function show(id, focus) {
-  if (!tabs.some(t => t.dataset.id === id)) id = tabs[0].dataset.id;
+const isTab = id => tabs.some(t => t.dataset.id === id);
+function show(id, focus, user) {
+  if (!isTab(id)) id = tabs[0].dataset.id;
   for (const t of tabs) {
     const on = t.dataset.id === id;
     t.setAttribute('aria-selected', String(on));
@@ -237,19 +250,25 @@ function show(id, focus) {
     document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
     if (on && focus) t.focus();
   }
-  if (location.hash.slice(1) !== id) history.replaceState(null, '', '#' + id);
+  if (location.hash.slice(1) !== id && (user || isTab(location.hash.slice(1)) || !location.hash))
+    history.replaceState(null, '', '#' + id);
+}
+function openNote() {
+  const note = document.getElementById(location.hash.slice(1));
+  if (note && note.tagName === 'DETAILS') { note.open = true; note.scrollIntoView({block: 'start'}); }
 }
 tabs.forEach((t, i) => {
-  t.addEventListener('click', () => show(t.dataset.id));
+  t.addEventListener('click', () => show(t.dataset.id, false, true));
   t.addEventListener('keydown', e => {
     const k = {ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1}[e.key];
     if (k === undefined) return;
     e.preventDefault();
-    show(tabs[(k + tabs.length) % tabs.length].dataset.id, true);
+    show(tabs[(k + tabs.length) % tabs.length].dataset.id, true, true);
   });
 });
-addEventListener('hashchange', () => show(location.hash.slice(1)));
+addEventListener('hashchange', () => isTab(location.hash.slice(1)) ? show(location.hash.slice(1)) : openNote());
 show(location.hash.slice(1));
+openNote();
 document.getElementById('copy').addEventListener('click', async () => {
   const text = document.getElementById('copy').dataset.text;
   const out = document.getElementById('copied');
