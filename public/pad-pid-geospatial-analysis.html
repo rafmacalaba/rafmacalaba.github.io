@@ -27,7 +27,7 @@ h1 { font-size:clamp(28px,3.2vw,38px); line-height:1.15; letter-spacing:-.02em; 
 .waffle i { aspect-ratio:1; border-radius:3px; background:var(--track); }
 .waffle i.on { background:var(--indigo); }
 .wcap { margin:8px 0 0; font-size:14px; color:var(--dim); text-align:center; }
-.steps { display:grid; grid-template-columns:repeat(4,1fr); margin:18px 0 0; padding:0; list-style:none; grid-column:1/-1;
+.steps { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); margin:18px 0 0; padding:0; list-style:none; grid-column:1/-1;
   border-top:1px solid var(--line); }
 .step { padding:14px 14px 0 0; position:relative; font-size:15px; color:var(--dim); }
 .step + .step { padding-left:22px; }
@@ -96,6 +96,16 @@ tr.rest td { color:var(--dim); } tr.rest .bar i { background:#9fb0c9; }
 .w.hi { color:#312e81; } .w.mid { color:#3f5fa8; } .w.lo { color:#6a7c9e; }
 .key { display:flex; flex-wrap:wrap; gap:6px 18px; font-size:14px; color:var(--dim); margin:0; padding:0; list-style:none; }
 .key li::before { content:""; display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:7px; vertical-align:-1px; background:var(--c); }
+.linechart { display:block; width:100%; max-width:500px; height:auto; }
+.linechart line { stroke:#e1e9f5; }
+.linechart .ln { fill:none; stroke:var(--indigo); stroke-width:3; stroke-linejoin:round; }
+.linechart .ln.part { stroke-dasharray:6 5; }
+.linechart circle { fill:var(--indigo); stroke:#fff; stroke-width:2; }
+.linechart circle.part { fill:#fff; stroke:var(--indigo); }
+.linechart text { font-size:13px; fill:var(--dim); text-anchor:middle; }
+.linechart .ax { font-size:12px; text-anchor:end; }
+.linechart .v { font-size:16px; font-weight:700; fill:var(--ink); }
+.linechart .yr { font-size:14px; fill:var(--ink); }
 .maprow { margin-top:30px; padding-top:26px; border-top:1px solid var(--line); }
 .maprow .key { margin:2px 0 12px; }
 .maprow .key li:last-child::before { box-shadow:inset 0 0 0 1px #b9c4d4; }
@@ -123,11 +133,13 @@ footer { margin-top:22px; font-size:15.5px; color:var(--dim); }
   .cols { gap:6px; } .col { font-size:12.5px; } .col .cb { height:130px; } .col b { font-size:18px; }
   .answer, .tabpanel { padding:22px 20px; }
   .waffle { max-width:220px; }
-  .steps { grid-template-columns:1fr 1fr; }
-  .step:nth-child(3) { padding-left:0; } .step:nth-child(3)::before { display:none; }
+  .step { font-size:14px; } .step b { font-size:24px; } .step + .step { padding-left:18px; }
   .method { padding:4px 20px; }
 }
-@media (max-width:520px) { .unit button { padding:8px 14px; } .unit button small { display:none; } .col .u { display:none; } }
+@media (max-width:520px) { .unit button { padding:8px 14px; } .unit button small { display:none; } .col .u { display:none; }
+  .steps { grid-template-columns:minmax(0,1fr); }
+  .step, .step + .step { display:flex; gap:12px; align-items:baseline; padding:10px 0 0; }
+  .step + .step::before { display:none; } .step b { flex:none; min-width:3.4em; } }
 @media (prefers-reduced-motion:no-preference) { [role=tab] { transition:background-color .15s,color .15s; } }
 @media print { body { background:#fff; } .tabs, .copy, .skip, .unit { display:none; } [role=tabpanel][hidden] { display:block !important; }
   .tabpanel { break-inside:avoid; box-shadow:none; } }
@@ -158,15 +170,12 @@ footer { margin-top:22px; font-size:15.5px; color:var(--dim); }
 <section class="panel answer" aria-labelledby="finding-project-using">
   <p class="lead" id="finding-project-using">In <strong>6 in 10 World Bank projects that use data</strong>
   (1,090 of 1,823, 60%), teams draw on geospatial data, mostly at the level of regions and districts.
-  <span class="range">Under the strictest checks the share is 50%.
-  Where a PAD was reviewed: 71% (771 of 1,092). 791 of these projects have <a href="#passages">only one passage read</a>, so every share here is a floor.
-  <a href="#reliability">How reliable is this?</a></span></p>
+  <span class="range"><a href="#reliability">How reliable is this?</a></span></p>
   <figure style="margin:0"><div class="waffle" role="img" aria-label="60 of every 100 data-using projects use geospatial data"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
     <figcaption class="wcap">60 of every 100 projects that use data</figcaption></figure>
   <ol class="steps" aria-label="How projects were counted">
-    <li class="step"><b>2,261</b>projects with a PAD or PID in the collection</li>
-    <li class="step"><b>2,261</b>had passages reviewed</li>
-    <li class="step"><b>1,823</b>use data in those passages</li>
+    <li class="step"><b>2,261</b>projects reviewed: every project with a PAD or PID in the collection</li>
+    <li class="step"><b>1,823</b>use data in the passages read</li>
     <li class="step last"><b>1,090</b>use geospatial data</li>
   </ol>
 </section>
@@ -180,16 +189,15 @@ footer { margin-top:22px; font-size:15.5px; color:var(--dim); }
 <section class="panel tabpanel" role="tabpanel" id="p-reach-project-using" aria-labelledby="t-reach-project-using" tabindex="0">
   <div class="pillar">
     <div>
-      <h2>Used in every sector and region, and under-counted</h2>
+      <h2>Used in every sector and region</h2>
       <p>By approval year, the share runs from 58% (2026) to 62% (2020).
       7 years of recent approvals are too few to show a trend.</p>
       <p>Among the 109 countries with at least 5 projects, the share runs from 21% in Kyrgyz Republic to 100% in 2 countries.</p>
-      <p class="dim small">Each project was judged from a few sampled passages, not its full documents, so every share
-      here is a floor. <a href="#passages">What a passage is</a>.</p>
       <div class="sowhat"><b>So what</b>Geospatial data is already part of routine project preparation, not a specialist add-on.</div>
     </div>
     <figure style="margin:0"><h3>Projects using geospatial data, by approval year</h3>
-      <div class="cols" role="img" aria-label="2020: 62% of 315; 2021: 59% of 295; 2022: 59% of 323; 2023: 60% of 260; 2024: 61% of 227; 2025: 59% of 227; 2026: 58% of 176"><div class="col"><div class="cb"><i style="height:61.9%"></i></div><b>62%</b>2020<br>315<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:59.0%"></i></div><b>59%</b>2021<br>295<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:59.4%"></i></div><b>59%</b>2022<br>323<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:59.6%"></i></div><b>60%</b>2023<br>260<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:60.8%"></i></div><b>61%</b>2024<br>227<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:58.6%"></i></div><b>59%</b>2025<br>227<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:58.5%"></i></div><b>58%</b>2026*<br>176<span class="u"> projects</span></div></div>
+      <div role="img" aria-label="2020: 62% of 315 projects; 2021: 59% of 295 projects; 2022: 59% of 323 projects; 2023: 60% of 260 projects; 2024: 61% of 227 projects; 2025: 59% of 227 projects; 2026: 58% of 176 projects"><svg class="linechart" viewBox="0 0 400 240" aria-hidden="true" focusable="false"><line x1="46" x2="392" y1="188.0" y2="188.0"/><text class="ax" x="38" y="192.0">0%</text><line x1="46" x2="392" y1="109.0" y2="109.0"/><text class="ax" x="38" y="113.0">50%</text><line x1="46" x2="392" y1="30.0" y2="30.0"/><text class="ax" x="38" y="34.0">100%</text><polyline class="ln" points="68.0,90.2 118.3,94.8 168.7,94.1 219.0,93.8 269.3,91.9 319.7,95.4"/><polyline class="ln part" points="319.7,95.4 370.0,95.6"/><circle class="" cx="68.0" cy="90.2" r="5"/><text class="v" x="68.0" y="78.2">62%</text><text class="yr" x="68.0" y="210">2020</text><text class="nn" x="68.0" y="228">315</text><circle class="" cx="118.3" cy="94.8" r="5"/><text class="v" x="118.3" y="82.8">59%</text><text class="yr" x="118.3" y="210">2021</text><text class="nn" x="118.3" y="228">295</text><circle class="" cx="168.7" cy="94.1" r="5"/><text class="v" x="168.7" y="82.1">59%</text><text class="yr" x="168.7" y="210">2022</text><text class="nn" x="168.7" y="228">323</text><circle class="" cx="219.0" cy="93.8" r="5"/><text class="v" x="219.0" y="81.8">60%</text><text class="yr" x="219.0" y="210">2023</text><text class="nn" x="219.0" y="228">260</text><circle class="" cx="269.3" cy="91.9" r="5"/><text class="v" x="269.3" y="79.9">61%</text><text class="yr" x="269.3" y="210">2024</text><text class="nn" x="269.3" y="228">227</text><circle class="" cx="319.7" cy="95.4" r="5"/><text class="v" x="319.7" y="83.4">59%</text><text class="yr" x="319.7" y="210">2025</text><text class="nn" x="319.7" y="228">227</text><circle class="part" cx="370.0" cy="95.6" r="5"/><text class="v" x="370.0" y="83.6">58%</text><text class="yr" x="370.0" y="210">2026*</text><text class="nn" x="370.0" y="228">176</text></svg></div>
+      <p class="dim small" style="margin:4px 0 0">Under each year: the number of projects counted.</p>
       <p class="dim small" style="margin:8px 0 0">* 2026 counts approvals to 22 September.</p></figure>
   </div>
   <div class="maprow">
@@ -257,15 +265,12 @@ footer { margin-top:22px; font-size:15.5px; color:var(--dim); }
 <section class="panel answer" aria-labelledby="finding-project-reviewed">
   <p class="lead" id="finding-project-reviewed">In <strong>nearly half of reviewed World Bank projects</strong>
   (1,090 of 2,261, 48%), teams draw on geospatial data, mostly at the level of regions and districts.
-  <span class="range">Under the strictest checks the share is 40%.
-  Where a PAD was reviewed: 62% (771 of 1,236). 1,178 of these projects have <a href="#passages">only one passage read</a>, so every share here is a floor.
-  <a href="#reliability">How reliable is this?</a></span></p>
+  <span class="range"><a href="#reliability">How reliable is this?</a></span></p>
   <figure style="margin:0"><div class="waffle" role="img" aria-label="48 of every 100 reviewed projects use geospatial data"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
     <figcaption class="wcap">48 of every 100 projects reviewed</figcaption></figure>
   <ol class="steps" aria-label="How projects were counted">
-    <li class="step"><b>2,261</b>projects with a PAD or PID in the collection</li>
-    <li class="step"><b>2,261</b>had passages reviewed</li>
-    <li class="step"><b>1,823</b>use data in those passages</li>
+    <li class="step"><b>2,261</b>projects reviewed: every project with a PAD or PID in the collection</li>
+    <li class="step"><b>1,823</b>use data in the passages read</li>
     <li class="step last"><b>1,090</b>use geospatial data</li>
   </ol>
 </section>
@@ -279,16 +284,15 @@ footer { margin-top:22px; font-size:15.5px; color:var(--dim); }
 <section class="panel tabpanel" role="tabpanel" id="p-reach-project-reviewed" aria-labelledby="t-reach-project-reviewed" tabindex="0">
   <div class="pillar">
     <div>
-      <h2>Used in every sector and region, and under-counted</h2>
+      <h2>Used in every sector and region</h2>
       <p>By approval year, the share runs from 44% (2025) to 51% (2020).
       7 years of recent approvals are too few to show a trend.</p>
       <p>Among the 118 countries with at least 5 projects, the share runs from 0% in Seychelles to 100% in Guatemala.</p>
-      <p class="dim small">Each project was judged from a few sampled passages, not its full documents, so every share
-      here is a floor. <a href="#passages">What a passage is</a>.</p>
       <div class="sowhat"><b>So what</b>Geospatial data is already part of routine project preparation, not a specialist add-on.</div>
     </div>
     <figure style="margin:0"><h3>Projects using geospatial data, by approval year</h3>
-      <div class="cols" role="img" aria-label="2020: 51% of 382; 2021: 47% of 370; 2022: 49% of 389; 2023: 50% of 313; 2024: 50% of 274; 2025: 44% of 302; 2026: 45% of 231"><div class="col"><div class="cb"><i style="height:51.0%"></i></div><b>51%</b>2020<br>382<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:47.0%"></i></div><b>47%</b>2021<br>370<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:49.4%"></i></div><b>49%</b>2022<br>389<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:49.5%"></i></div><b>50%</b>2023<br>313<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:50.4%"></i></div><b>50%</b>2024<br>274<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:44.0%"></i></div><b>44%</b>2025<br>302<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:44.6%"></i></div><b>45%</b>2026*<br>231<span class="u"> projects</span></div></div>
+      <div role="img" aria-label="2020: 51% of 382 projects; 2021: 47% of 370 projects; 2022: 49% of 389 projects; 2023: 50% of 313 projects; 2024: 50% of 274 projects; 2025: 44% of 302 projects; 2026: 45% of 231 projects"><svg class="linechart" viewBox="0 0 400 240" aria-hidden="true" focusable="false"><line x1="46" x2="392" y1="188.0" y2="188.0"/><text class="ax" x="38" y="192.0">0%</text><line x1="46" x2="392" y1="109.0" y2="109.0"/><text class="ax" x="38" y="113.0">50%</text><line x1="46" x2="392" y1="30.0" y2="30.0"/><text class="ax" x="38" y="34.0">100%</text><polyline class="ln" points="68.0,107.4 118.3,113.7 168.7,109.9 219.0,109.8 269.3,108.4 319.7,118.5"/><polyline class="ln part" points="319.7,118.5 370.0,117.5"/><circle class="" cx="68.0" cy="107.4" r="5"/><text class="v" x="68.0" y="95.4">51%</text><text class="yr" x="68.0" y="210">2020</text><text class="nn" x="68.0" y="228">382</text><circle class="" cx="118.3" cy="113.7" r="5"/><text class="v" x="118.3" y="101.7">47%</text><text class="yr" x="118.3" y="210">2021</text><text class="nn" x="118.3" y="228">370</text><circle class="" cx="168.7" cy="109.9" r="5"/><text class="v" x="168.7" y="97.9">49%</text><text class="yr" x="168.7" y="210">2022</text><text class="nn" x="168.7" y="228">389</text><circle class="" cx="219.0" cy="109.8" r="5"/><text class="v" x="219.0" y="97.8">50%</text><text class="yr" x="219.0" y="210">2023</text><text class="nn" x="219.0" y="228">313</text><circle class="" cx="269.3" cy="108.4" r="5"/><text class="v" x="269.3" y="96.4">50%</text><text class="yr" x="269.3" y="210">2024</text><text class="nn" x="269.3" y="228">274</text><circle class="" cx="319.7" cy="118.5" r="5"/><text class="v" x="319.7" y="106.5">44%</text><text class="yr" x="319.7" y="210">2025</text><text class="nn" x="319.7" y="228">302</text><circle class="part" cx="370.0" cy="117.5" r="5"/><text class="v" x="370.0" y="105.5">45%</text><text class="yr" x="370.0" y="210">2026*</text><text class="nn" x="370.0" y="228">231</text></svg></div>
+      <p class="dim small" style="margin:4px 0 0">Under each year: the number of projects counted.</p>
       <p class="dim small" style="margin:8px 0 0">* 2026 counts approvals to 19 November.</p></figure>
   </div>
   <div class="maprow">
@@ -356,15 +360,12 @@ footer { margin-top:22px; font-size:15.5px; color:var(--dim); }
 <section class="panel answer" aria-labelledby="finding-document-using">
   <p class="lead" id="finding-document-using">In <strong>over half of PADs and PIDs that use data</strong>
   (1,434 of 2,765, 52%), teams draw on geospatial data, mostly at the level of regions and districts.
-  <span class="range">Under the strictest checks the share is 42%.
-  PADs alone: 63% (664 of 1,053). 1,886 of these documents have <a href="#passages">only one passage read</a>, so every share here is a floor.
-  <a href="#reliability">How reliable is this?</a></span></p>
+  <span class="range"><a href="#reliability">How reliable is this?</a></span></p>
   <figure style="margin:0"><div class="waffle" role="img" aria-label="52 of every 100 data-using documents use geospatial data"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
     <figcaption class="wcap">52 of every 100 documents that use data</figcaption></figure>
   <ol class="steps" aria-label="How documents were counted">
-    <li class="step"><b>4,679</b>PADs and PIDs in the collection</li>
-    <li class="step"><b>3,498</b>had passages reviewed</li>
-    <li class="step"><b>2,765</b>use data in those passages</li>
+    <li class="step"><b>3,498</b>PADs and PIDs reviewed, of 4,679 in the collection</li>
+    <li class="step"><b>2,765</b>use data in the passages read</li>
     <li class="step last"><b>1,434</b>use geospatial data</li>
   </ol>
 </section>
@@ -378,16 +379,15 @@ footer { margin-top:22px; font-size:15.5px; color:var(--dim); }
 <section class="panel tabpanel" role="tabpanel" id="p-reach-document-using" aria-labelledby="t-reach-document-using" tabindex="0">
   <div class="pillar">
     <div>
-      <h2>Used in every sector and region, and under-counted</h2>
+      <h2>Used in every sector and region</h2>
       <p>By approval year, the share runs from 48% (2020) to 56% (2025).
       7 years of recent approvals are too few to show a trend.</p>
       <p>Among the 117 countries with at least 5 documents, the share runs from 17% in Croatia to 86% in 2 countries.</p>
-      <p class="dim small">Each document was judged from a few sampled passages, not its full documents, so every share
-      here is a floor. <a href="#passages">What a passage is</a>.</p>
       <div class="sowhat"><b>So what</b>Geospatial data is already part of routine project preparation, not a specialist add-on.</div>
     </div>
     <figure style="margin:0"><h3>Documents using geospatial data, by approval year</h3>
-      <div class="cols" role="img" aria-label="2020: 48% of 545; 2021: 49% of 497; 2022: 50% of 562; 2023: 55% of 365; 2024: 55% of 288; 2025: 56% of 286; 2026: 56% of 222"><div class="col"><div class="cb"><i style="height:48.1%"></i></div><b>48%</b>2020<br>545<span class="u"> documents</span></div><div class="col"><div class="cb"><i style="height:49.3%"></i></div><b>49%</b>2021<br>497<span class="u"> documents</span></div><div class="col"><div class="cb"><i style="height:50.5%"></i></div><b>50%</b>2022<br>562<span class="u"> documents</span></div><div class="col"><div class="cb"><i style="height:54.8%"></i></div><b>55%</b>2023<br>365<span class="u"> documents</span></div><div class="col"><div class="cb"><i style="height:55.2%"></i></div><b>55%</b>2024<br>288<span class="u"> documents</span></div><div class="col"><div class="cb"><i style="height:55.9%"></i></div><b>56%</b>2025<br>286<span class="u"> documents</span></div><div class="col"><div class="cb"><i style="height:55.9%"></i></div><b>56%</b>2026*<br>222<span class="u"> documents</span></div></div>
+      <div role="img" aria-label="2020: 48% of 545 documents; 2021: 49% of 497 documents; 2022: 50% of 562 documents; 2023: 55% of 365 documents; 2024: 55% of 288 documents; 2025: 56% of 286 documents; 2026: 56% of 222 documents"><svg class="linechart" viewBox="0 0 400 240" aria-hidden="true" focusable="false"><line x1="46" x2="392" y1="188.0" y2="188.0"/><text class="ax" x="38" y="192.0">0%</text><line x1="46" x2="392" y1="109.0" y2="109.0"/><text class="ax" x="38" y="113.0">50%</text><line x1="46" x2="392" y1="30.0" y2="30.0"/><text class="ax" x="38" y="34.0">100%</text><polyline class="ln" points="68.0,112.0 118.3,110.1 168.7,108.2 219.0,101.4 269.3,100.8 319.7,99.7"/><polyline class="ln part" points="319.7,99.7 370.0,99.7"/><circle class="" cx="68.0" cy="112.0" r="5"/><text class="v" x="68.0" y="100.0">48%</text><text class="yr" x="68.0" y="210">2020</text><text class="nn" x="68.0" y="228">545</text><circle class="" cx="118.3" cy="110.1" r="5"/><text class="v" x="118.3" y="98.1">49%</text><text class="yr" x="118.3" y="210">2021</text><text class="nn" x="118.3" y="228">497</text><circle class="" cx="168.7" cy="108.2" r="5"/><text class="v" x="168.7" y="96.2">50%</text><text class="yr" x="168.7" y="210">2022</text><text class="nn" x="168.7" y="228">562</text><circle class="" cx="219.0" cy="101.4" r="5"/><text class="v" x="219.0" y="89.4">55%</text><text class="yr" x="219.0" y="210">2023</text><text class="nn" x="219.0" y="228">365</text><circle class="" cx="269.3" cy="100.8" r="5"/><text class="v" x="269.3" y="88.8">55%</text><text class="yr" x="269.3" y="210">2024</text><text class="nn" x="269.3" y="228">288</text><circle class="" cx="319.7" cy="99.7" r="5"/><text class="v" x="319.7" y="87.7">56%</text><text class="yr" x="319.7" y="210">2025</text><text class="nn" x="319.7" y="228">286</text><circle class="part" cx="370.0" cy="99.7" r="5"/><text class="v" x="370.0" y="87.7">56%</text><text class="yr" x="370.0" y="210">2026*</text><text class="nn" x="370.0" y="228">222</text></svg></div>
+      <p class="dim small" style="margin:4px 0 0">Under each year: the number of documents counted.</p>
       <p class="dim small" style="margin:8px 0 0">* 2026 counts approvals to 22 September.</p></figure>
   </div>
   <div class="maprow">
@@ -455,15 +455,12 @@ footer { margin-top:22px; font-size:15.5px; color:var(--dim); }
 <section class="panel answer" aria-labelledby="finding-document-reviewed">
   <p class="lead" id="finding-document-reviewed">In <strong>4 in 10 reviewed PADs and PIDs</strong>
   (1,434 of 3,498, 41%), teams draw on geospatial data, mostly at the level of regions and districts.
-  <span class="range">Under the strictest checks the share is 33%.
-  PADs alone: 52% (664 of 1,285). 2,555 of these documents have <a href="#passages">only one passage read</a>, so every share here is a floor.
-  <a href="#reliability">How reliable is this?</a></span></p>
+  <span class="range"><a href="#reliability">How reliable is this?</a></span></p>
   <figure style="margin:0"><div class="waffle" role="img" aria-label="41 of every 100 reviewed documents use geospatial data"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
     <figcaption class="wcap">41 of every 100 documents reviewed</figcaption></figure>
   <ol class="steps" aria-label="How documents were counted">
-    <li class="step"><b>4,679</b>PADs and PIDs in the collection</li>
-    <li class="step"><b>3,498</b>had passages reviewed</li>
-    <li class="step"><b>2,765</b>use data in those passages</li>
+    <li class="step"><b>3,498</b>PADs and PIDs reviewed, of 4,679 in the collection</li>
+    <li class="step"><b>2,765</b>use data in the passages read</li>
     <li class="step last"><b>1,434</b>use geospatial data</li>
   </ol>
 </section>
@@ -477,16 +474,15 @@ footer { margin-top:22px; font-size:15.5px; color:var(--dim); }
 <section class="panel tabpanel" role="tabpanel" id="p-reach-document-reviewed" aria-labelledby="t-reach-document-reviewed" tabindex="0">
   <div class="pillar">
     <div>
-      <h2>Used in every sector and region, and under-counted</h2>
+      <h2>Used in every sector and region</h2>
       <p>By approval year, the share runs from 38% (2020) to 45% (2024).
       7 years of recent approvals are too few to show a trend.</p>
       <p>Among the 124 countries with at least 5 documents, the share runs from 0% in Seychelles to 67% in Vanuatu.</p>
-      <p class="dim small">Each document was judged from a few sampled passages, not its full documents, so every share
-      here is a floor. <a href="#passages">What a passage is</a>.</p>
       <div class="sowhat"><b>So what</b>Geospatial data is already part of routine project preparation, not a specialist add-on.</div>
     </div>
     <figure style="margin:0"><h3>Documents using geospatial data, by approval year</h3>
-      <div class="cols" role="img" aria-label="2020: 38% of 683; 2021: 40% of 617; 2022: 40% of 709; 2023: 44% of 457; 2024: 45% of 352; 2025: 42% of 379; 2026: 41% of 301"><div class="col"><div class="cb"><i style="height:38.4%"></i></div><b>38%</b>2020<br>683<span class="u"> documents</span></div><div class="col"><div class="cb"><i style="height:39.7%"></i></div><b>40%</b>2021<br>617<span class="u"> documents</span></div><div class="col"><div class="cb"><i style="height:40.1%"></i></div><b>40%</b>2022<br>709<span class="u"> documents</span></div><div class="col"><div class="cb"><i style="height:43.8%"></i></div><b>44%</b>2023<br>457<span class="u"> documents</span></div><div class="col"><div class="cb"><i style="height:45.2%"></i></div><b>45%</b>2024<br>352<span class="u"> documents</span></div><div class="col"><div class="cb"><i style="height:42.2%"></i></div><b>42%</b>2025<br>379<span class="u"> documents</span></div><div class="col"><div class="cb"><i style="height:41.2%"></i></div><b>41%</b>2026*<br>301<span class="u"> documents</span></div></div>
+      <div role="img" aria-label="2020: 38% of 683 documents; 2021: 40% of 617 documents; 2022: 40% of 709 documents; 2023: 44% of 457 documents; 2024: 45% of 352 documents; 2025: 42% of 379 documents; 2026: 41% of 301 documents"><svg class="linechart" viewBox="0 0 400 240" aria-hidden="true" focusable="false"><line x1="46" x2="392" y1="188.0" y2="188.0"/><text class="ax" x="38" y="192.0">0%</text><line x1="46" x2="392" y1="109.0" y2="109.0"/><text class="ax" x="38" y="113.0">50%</text><line x1="46" x2="392" y1="30.0" y2="30.0"/><text class="ax" x="38" y="34.0">100%</text><polyline class="ln" points="68.0,127.3 118.3,125.3 168.7,124.6 219.0,118.8 269.3,116.6 319.7,121.3"/><polyline class="ln part" points="319.7,121.3 370.0,122.9"/><circle class="" cx="68.0" cy="127.3" r="5"/><text class="v" x="68.0" y="115.3">38%</text><text class="yr" x="68.0" y="210">2020</text><text class="nn" x="68.0" y="228">683</text><circle class="" cx="118.3" cy="125.3" r="5"/><text class="v" x="118.3" y="113.3">40%</text><text class="yr" x="118.3" y="210">2021</text><text class="nn" x="118.3" y="228">617</text><circle class="" cx="168.7" cy="124.6" r="5"/><text class="v" x="168.7" y="112.6">40%</text><text class="yr" x="168.7" y="210">2022</text><text class="nn" x="168.7" y="228">709</text><circle class="" cx="219.0" cy="118.8" r="5"/><text class="v" x="219.0" y="106.8">44%</text><text class="yr" x="219.0" y="210">2023</text><text class="nn" x="219.0" y="228">457</text><circle class="" cx="269.3" cy="116.6" r="5"/><text class="v" x="269.3" y="104.6">45%</text><text class="yr" x="269.3" y="210">2024</text><text class="nn" x="269.3" y="228">352</text><circle class="" cx="319.7" cy="121.3" r="5"/><text class="v" x="319.7" y="109.3">42%</text><text class="yr" x="319.7" y="210">2025</text><text class="nn" x="319.7" y="228">379</text><circle class="part" cx="370.0" cy="122.9" r="5"/><text class="v" x="370.0" y="110.9">41%</text><text class="yr" x="370.0" y="210">2026*</text><text class="nn" x="370.0" y="228">301</text></svg></div>
+      <p class="dim small" style="margin:4px 0 0">Under each year: the number of documents counted.</p>
       <p class="dim small" style="margin:8px 0 0">* 2026 counts approvals to 19 November.</p></figure>
   </div>
   <div class="maprow">
@@ -578,22 +574,25 @@ footer { margin-top:22px; font-size:15.5px; color:var(--dim); }
     <p>The same dataset is named many ways (“DHS”, “2016 UDHS”, “Demographic and Health Survey”), so counts of distinct
     datasets are unreliable. Whether a project or document uses geospatial data is a clear yes or no. Source names are
     merged across spellings for display only.</p></details>
-  <details id="passages"><summary>What does “passages read” mean?</summary>
-    <p>A passage is an excerpt of a PAD or PID, about a page long, taken where the text mentions data. We read a few
-    passages from each document, not the whole document. A passage is not a data mention: one passage can hold several.
-    So a project with one passage read was judged from a small part of its documents.</p>
-    <p>The more we read, the more we find. Of the data-using projects with one passage read, 41% use
-    geospatial data; with five or more, 88% do. Projects with two or more documents reviewed reach 75%, against 48% with one document. Larger, data-heavy projects also had more
-    passages read, so part of the rise reflects the projects themselves. Read in full, more projects would likely count,
-    so every share on this page is a floor.</p>
-    <figure style="margin:14px 0 4px;max-width:560px"><h3>Data-using projects with geospatial data, by passages read</h3>
-      <div class="cols" role="img" aria-label="1 passages: 41%; 2 passages: 62%; 3 passages: 69%; 4 passages: 75%; 5 or more passages: 88%"><div class="col"><div class="cb"><i style="height:41.2%"></i></div><b>41%</b>1 passage<br>791<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:62.1%"></i></div><b>62%</b>2 passages<br>282<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:68.6%"></i></div><b>69%</b>3 passages<br>242<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:75.1%"></i></div><b>75%</b>4 passages<br>197<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:88.4%"></i></div><b>88%</b>5 or more passages<br>311<span class="u"> projects</span></div></div></figure></details>
   <details id="reliability"><summary>How reliable are these figures?</summary>
     <p>Every number is counted from the review records; none is typed in. An AI-assisted reviewer labelled each data
     mention against a written rubric and quoted the passage words behind each place label. People have not yet checked
     the place labels, and 0 of 7,663 judgements that data was used carry a senior
     reviewer's ruling.</p>
-    <p>Under stricter rules the share falls. For projects that use data it is 60% without uncertain labels and 50% when the quoted evidence must also match word for word; for documents, 52% without uncertain labels and 42% when the quoted evidence must also match word for word. The word-for-word
+    <p><b>Every share is a floor.</b> Each project was judged from a few sampled passages, not its full documents. A
+    passage is an excerpt of a PAD or PID, about a page long, taken where the text mentions data; it is not a data
+    mention, and one passage can hold several. 791 of the 1,823 data-using projects have only one
+    passage read. The more we read, the more we find: of the data-using projects with one passage read,
+    41% use geospatial data; with five or more, 88% do. Projects with two or more documents reviewed reach 75%, against 48% with one document. Larger,
+    data-heavy projects also had more passages read, so part of the rise reflects the projects themselves. Read in
+    full, more projects would likely count.</p>
+    <figure style="margin:14px 0 14px;max-width:560px"><h3>Data-using projects with geospatial data, by passages read</h3>
+      <div class="cols" role="img" aria-label="1 passages: 41%; 2 passages: 62%; 3 passages: 69%; 4 passages: 75%; 5 or more passages: 88%"><div class="col"><div class="cb"><i style="height:41.2%"></i></div><b>41%</b>1 passage<br>791<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:62.1%"></i></div><b>62%</b>2 passages<br>282<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:68.6%"></i></div><b>69%</b>3 passages<br>242<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:75.1%"></i></div><b>75%</b>4 passages<br>197<span class="u"> projects</span></div><div class="col"><div class="cb"><i style="height:88.4%"></i></div><b>88%</b>5 or more passages<br>311<span class="u"> projects</span></div></div></figure>
+    <p><b>PADs show more than PIDs.</b> Where a PAD was reviewed, 71% of data-using
+    projects use geospatial data (771 of 1,092); counting PADs alone,
+    63% of data-using documents do (664 of 1,053).
+    A PAD is the full appraisal; PIDs are short and often written at concept stage.</p>
+    <p><b>Stricter checks.</b> Under stricter rules the share falls. For projects that use data it is 60% without uncertain labels and 50% when the quoted evidence must also match word for word; for documents, 52% without uncertain labels and 42% when the quoted evidence must also match word for word. The word-for-word
     rule is harsh, because quotes taken from tables often reorder the cells. A defensible statement is <b>between
     50% and 60% of projects</b>. A person should check a random sample of
     projects before the figure is cited externally.</p></details>
