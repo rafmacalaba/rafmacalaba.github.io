@@ -15,6 +15,7 @@ export const projectsSchema = z.object({
   title: z.string().min(1),
   domain: z.enum(["research", "engineering", "policy"]),
   year: z.number().int().gte(1900).lte(2100),
+  period: z.string().min(1).optional(),
   summary: z.string().min(1),
   links: z
     .array(

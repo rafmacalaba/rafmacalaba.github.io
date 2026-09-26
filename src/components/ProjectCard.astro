@@ -5,16 +5,17 @@ interface Props {
   title: string;
   domain: ProjectFrontmatter["domain"];
   year: number;
+  period?: string;
   summary: string;
   links: ProjectFrontmatter["links"];
   slug?: string;
 }
 
-const { title, domain, year, summary, links, slug } = Astro.props;
+const { title, domain, year, period, summary, links, slug } = Astro.props;
 ---
 
 <article class="project-card" id={slug ? `project-${slug}` : undefined} data-domain={domain}>
-  <p class="project-card-meta"><span>{domain}</span><time datetime={`${year}`}>{year}</time></p>
+  <p class="project-card-meta"><span>{domain}</span>{period ? <span>{period}</span> : <time datetime={`${year}`}>{year}</time>}</p>
   <h3 class="project-card-title">
     <a href={slug ? `/work#project-${slug}` : links[0].url}>{title}<span aria-hidden="true"> ↗</span></a>
   </h3>
