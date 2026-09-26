@@ -13,19 +13,15 @@ interface Props {
 const { title, domain, year, summary, links, slug } = Astro.props;
 ---
 
-<article class="project-card" data-domain={domain}>
-  <header class="project-card-header">
-    <h3 class="project-card-title">
-      {slug ? <a href={`/work#${slug}`}>{title}</a> : title}
-    </h3>
-    <span class="project-card-meta">{domain} &middot; {year}</span>
-  </header>
+<article class="project-card" id={slug ? `project-${slug}` : undefined} data-domain={domain}>
+  <p class="project-card-meta"><span>{domain}</span><time datetime={`${year}`}>{year}</time></p>
+  <h3 class="project-card-title">
+    <a href={slug ? `/work#project-${slug}` : links[0].url}>{title}<span aria-hidden="true"> ↗</span></a>
+  </h3>
   <p class="project-card-summary">{summary}</p>
-  <ul class="project-card-links">
+  <ul class="project-card-links" aria-label={`Links for ${title}`}>
     {links.map((link) => (
-      <li>
-        <a href={link.url} rel="noopener noreferrer">{link.label}</a>
-      </li>
+      <li><a href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a></li>
     ))}
   </ul>
 </article>

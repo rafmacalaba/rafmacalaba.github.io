@@ -1,62 +1,53 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Chip from "../components/Chip.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import { getProjects } from "../lib/content.ts";
 
 const projects = await getProjects();
-
-const chips: { label: string; value: string }[] = [
-  { label: "All", value: "all" },
-  { label: "Research", value: "research" },
-  { label: "Engineering", value: "engineering" },
-  { label: "Policy", value: "policy" },
-];
+const selected = projects.filter((project) => project.data.featured === true);
+const other = projects.filter((project) => project.data.featured !== true);
 ---
 
-<BaseLayout
-  title="Work"
-  description="Selected projects across research, engineering, and policy."
->
-  <header class="page-heading">
+<BaseLayout title="Work" description="Research and tools for AI in development data.">
+  <header class="page-intro">
+    <p class="section-kicker">Research · Engineering · Open source</p>
     <h1>Work</h1>
-    <p>
-      Curated projects. Filter by domain. Each card links to artifacts
-      (papers, repositories, talks).
-    </p>
+    <p>Projects that connect questions about development data with practical systems, methods, and tools.</p>
   </header>
 
   {projects.length === 0 ? (
-    <p>No projects yet. Owner will add work here.</p>
+    <div class="empty-state"><p>Work is being gathered here.</p></div>
   ) : (
     <>
-      <div class="chip-row" role="group" aria-label="Filter projects by domain">
-        {chips.map((c, i) => (
-          <Chip
-            label={c.label}
-            value={c.value}
-            group="domain"
-            pressed={i === 0}
-          />
-        ))}
-      </div>
+      {selected.length > 0 && (
+        <section class="work-section" aria-labelledby="selected-projects-title">
+          <header class="section-header">
+            <div><p class="section-kicker">A few starting points</p><h2 class="section-title" id="selected-projects-title">Selected projects</h2></div>
+            <span class="section-count">{selected.length} projects</span>
+          </header>
+          <div class="project-grid work-featured-grid">
+            {selected.map((project) => (
+              <ProjectCard title={project.data.title} domain={project.data.domain} year={project.data.year}
+                summary={project.data.summary} links={project.data.links} slug={project.slug} />
+            ))}
+          </div>
+        </section>
+      )}
 
-      <div class="project-grid">
-        {projects.map((p) => (
-          <ProjectCard
-            title={p.data.title}
-            domain={p.data.domain}
-            year={p.data.year}
-            summary={p.data.summary}
-            links={p.data.links}
-            slug={p.slug}
-          />
-        ))}
-      </div>
+      {other.length > 0 && (
+        <section class="work-section" aria-labelledby="other-projects-title">
+          <header class="section-header">
+            <div><p class="section-kicker">More in the collection</p><h2 class="section-title" id="other-projects-title">Other projects</h2></div>
+            <span class="section-count">{other.length} projects</span>
+          </header>
+          <div class="project-grid">
+            {other.map((project) => (
+              <ProjectCard title={project.data.title} domain={project.data.domain} year={project.data.year}
+                summary={project.data.summary} links={project.data.links} slug={project.slug} />
+            ))}
+          </div>
+        </section>
+      )}
     </>
   )}
-
-  <script>
-    import "../scripts/filter.ts";
-  </script>
 </BaseLayout>
