@@ -10,7 +10,7 @@ export interface ContactLink {
 
 export const siteConfig = {
   name: "Rafael Macalaba",
-  tagline: "Research and tools for AI in development data.",
+  tagline: "Research, engineering, and applied AI.",
   url: "https://rafmacalaba.github.io",
   navLinks: [
     { label: "Home", href: "/" },
