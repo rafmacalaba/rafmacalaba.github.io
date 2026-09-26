@@ -10,14 +10,19 @@ const updatedLabel = now
       year: "numeric",
       month: "long",
       day: "numeric",
+      timeZone: "UTC",
     })
   : "";
 ---
 
-<BaseLayout title="Now" description="What I am focused on right now.">
+<BaseLayout title="Now" description="Current questions and projects in progress.">
   <article class="now-page">
-    <h1>Now</h1>
-    {now && <p class="now-updated">Updated {updatedLabel}</p>}
-    {Content ? <Content /> : <p>No updates yet.</p>}
+    <header class="now-header">
+      <p class="section-kicker">Current focus</p>
+      <h1>Now</h1>
+      <p class="now-dek">A working note on the questions and systems occupying my time.</p>
+      {now && <p class="now-updated">Updated <time datetime={now.data.updated.toISOString()}>{updatedLabel}</time></p>}
+    </header>
+    {Content ? <div class="now-content"><Content /></div> : <p>No updates yet.</p>}
   </article>
 </BaseLayout>

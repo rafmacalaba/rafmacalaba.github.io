@@ -2,7 +2,6 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import PostCard from "../components/PostCard.astro";
-import NowPullQuote from "../components/NowPullQuote.astro";
 import SocialIcons from "../components/SocialIcons.astro";
 import { siteConfig } from "../lib/site.ts";
 import { fetchGitHubData } from "../lib/github.ts";
@@ -10,66 +9,71 @@ import { getRecentPosts, getFeaturedProjects, getNow } from "../lib/content.ts";
 
 const data = await fetchGitHubData();
 const { profile } = data;
-
-const featured = (await getFeaturedProjects()).slice(0, 4);
+const featured = (await getFeaturedProjects()).slice(0, 3);
 const recentPosts = await getRecentPosts(3);
 const now = await getNow();
 
 const nowExcerpt = (() => {
   if (!now) return "";
-  const lines = now.body
-    .split("\n")
-    .map((l) => l.trim())
-    .filter((l) => l && !l.startsWith("#") && !l.startsWith("-"));
-  return lines[0] ?? "";
+  const firstParagraph = now.body.split(/\n\s*\n/).map((p) => p.trim()).find(Boolean) ?? "";
+  const sentences = firstParagraph.match(/[^.!?]+[.!?]+|[^.!?]+$/g) ?? [firstParagraph];
+  return sentences.slice(0, 2).join(" ").trim();
 })();
 
-const contactLinks: { href: string; label: string }[] = [
-  ...siteConfig.contactLinks,
-];
-if (profile.html_url && !contactLinks.some((c) => c.href === profile.html_url)) {
-  contactLinks.push({ href: profile.html_url, label: "GitHub profile" });
-}
+const emailLink = siteConfig.contactLinks.find((link) => link.label === "Email");
 ---
 
-<BaseLayout
-  title={siteConfig.name}
-  description={siteConfig.tagline}
->
-  <section class="hero">
-    <div>
-      <p class="hero-kicker">{profile.location ?? "Available for collaboration"}</p>
-      <h1 class="hero-name">{siteConfig.name}</h1>
+<BaseLayout title={siteConfig.name} description={siteConfig.tagline}>
+  <section class="home-hero" aria-labelledby="home-title">
+    <div class="home-hero-copy">
+      <p class="home-kicker">Researcher and builder <span aria-hidden="true">/</span> World Bank</p>
+      <h1 id="home-title">Rafael Macalaba</h1>
       <p class="hero-tagline">{siteConfig.tagline}</p>
+      <p class="home-intro">
+        I study how datasets are used in published research and build tools for working with development data.
+      </p>
+      <div class="home-actions">
+        <a class="button button-primary" href="/work">Explore selected work</a>
+        <a class="button button-secondary" href="/writing">Read recent writing</a>
+      </div>
     </div>
-    {profile.avatar_url && (
-      <img
-        class="hero-avatar"
-        src={profile.avatar_url}
-        alt={`${siteConfig.name} avatar`}
-        width="96"
-        height="96"
-        loading="eager"
-      />
-    )}
-    <SocialIcons />
+    <aside class="home-portrait" aria-label="About Rafael">
+      {profile.avatar_url && (
+        <img
+          class="hero-avatar"
+          src={profile.avatar_url}
+          alt={`${siteConfig.name}`}
+          width="144"
+          height="144"
+          loading="eager"
+        />
+      )}
+      <p class="portrait-place">{profile.location ?? "Washington, D.C."}</p>
+      <p class="portrait-note">AI for development data<br />Research · Engineering · Open tools</p>
+    </aside>
+    <div class="home-social" aria-label="Find Rafael online">
+      <SocialIcons />
+    </div>
   </section>
 
   {featured.length > 0 && (
-    <section class="section">
+    <section class="home-section" aria-labelledby="selected-work-title">
       <header class="section-header">
-        <h2 class="section-title">Highlights</h2>
-        <a class="section-link" href="/work">All work &rarr;</a>
+        <div>
+          <p class="section-kicker">From research to working tools</p>
+          <h2 class="section-title" id="selected-work-title">Selected work</h2>
+        </div>
+        <a class="section-link" href="/work">All work <span aria-hidden="true">↗</span></a>
       </header>
-      <div class="project-grid">
-        {featured.map((p) => (
+      <div class="project-grid home-project-grid">
+        {featured.map((project) => (
           <ProjectCard
-            title={p.data.title}
-            domain={p.data.domain}
-            year={p.data.year}
-            summary={p.data.summary}
-            links={p.data.links}
-            slug={p.slug}
+            title={project.data.title}
+            domain={project.data.domain}
+            year={project.data.year}
+            summary={project.data.summary}
+            links={project.data.links}
+            slug={project.slug}
           />
         ))}
       </div>
@@ -77,34 +81,44 @@ if (profile.html_url && !contactLinks.some((c) => c.href === profile.html_url)) 
   )}
 
   {recentPosts.length > 0 && (
-    <section class="section">
+    <section class="home-section" aria-labelledby="writing-title">
       <header class="section-header">
-        <h2 class="section-title">Recent writing</h2>
-        <a class="section-link" href="/writing">All writing &rarr;</a>
+        <div>
+          <p class="section-kicker">Ideas, methods, and field notes</p>
+          <h2 class="section-title" id="writing-title">Recent writing</h2>
+        </div>
+        <a class="section-link" href="/writing">All writing <span aria-hidden="true">↗</span></a>
       </header>
-      <div class="post-list">
-        {recentPosts.map((p) => (
+      <div class="post-list home-post-list">
+        {recentPosts.map((post) => (
           <PostCard
-            title={p.data.title}
-            description={p.data.description}
-            pubDate={p.data.pubDate}
-            href={`/blog/${p.slug}`}
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            href={`/blog/${post.slug}`}
           />
         ))}
       </div>
     </section>
   )}
 
-  {now && <NowPullQuote excerpt={nowExcerpt} />}
-
-  {contactLinks.length > 0 && (
-    <section class="section">
-      <h2 class="section-title">Contact</h2>
-      <ul class="contact-list">
-        {contactLinks.map((link) => (
-          <li><a href={link.href} rel="noopener noreferrer">{link.label}</a></li>
-        ))}
-      </ul>
+  {now && (
+    <section class="home-now" aria-label="Current focus">
+      <div>
+        <p class="section-kicker">Current focus</p>
+        <h2 class="home-now-title">What I’m working through now</h2>
+        <p class="home-now-copy">{nowExcerpt}</p>
+      </div>
+      <a class="button button-secondary" href="/now">More on Now <span aria-hidden="true">↗</span></a>
     </section>
   )}
+
+  <section class="home-contact" aria-labelledby="contact-title">
+    <div>
+      <p class="section-kicker">Continue the conversation</p>
+      <h2 id="contact-title">Working on a data or AI problem?</h2>
+      <p>Reach out about research, development data, or open tools.</p>
+    </div>
+    {emailLink && <a class="button button-primary" href={emailLink.href}>Email Rafael <span aria-hidden="true">↗</span></a>}
+  </section>
 </BaseLayout>

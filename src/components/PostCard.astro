@@ -11,15 +11,14 @@ const dateLabel = pubDate.toLocaleDateString("en-US", {
   year: "numeric",
   month: "short",
   day: "numeric",
+  timeZone: "UTC",
 });
 ---
 
 <article class="post-card">
-  <a href={href} class="post-card-title-link">
-    <h3 class="post-card-title">{title}</h3>
-  </a>
-  <p class="post-card-date">
-    <time datetime={pubDate.toISOString()}>{dateLabel}</time>
-  </p>
-  <p class="post-card-desc">{description}</p>
+  <time class="post-card-date" datetime={pubDate.toISOString()}>{dateLabel}</time>
+  <div class="post-card-copy">
+    <h3 class="post-card-title"><a href={href}>{title}</a></h3>
+    <p class="post-card-desc">{description}</p>
+  </div>
 </article>
