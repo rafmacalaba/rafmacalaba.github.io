@@ -27,7 +27,7 @@ const other = projects.filter((project) => project.data.featured !== true);
           </header>
           <div class="project-grid work-featured-grid">
             {selected.map((project) => (
-              <ProjectCard title={project.data.title} domain={project.data.domain} year={project.data.year}
+              <ProjectCard title={project.data.title} domain={project.data.domain} year={project.data.year} period={project.data.period}
                 summary={project.data.summary} links={project.data.links} slug={project.slug} />
             ))}
           </div>
@@ -42,7 +42,7 @@ const other = projects.filter((project) => project.data.featured !== true);
           </header>
           <div class="project-grid">
             {other.map((project) => (
-              <ProjectCard title={project.data.title} domain={project.data.domain} year={project.data.year}
+              <ProjectCard title={project.data.title} domain={project.data.domain} year={project.data.year} period={project.data.period}
                 summary={project.data.summary} links={project.data.links} slug={project.slug} />
             ))}
           </div>

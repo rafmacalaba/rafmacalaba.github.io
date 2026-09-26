@@ -77,7 +77,8 @@ describe("projectsSchema", () => {
     const result = projectsSchema.safeParse({
       title: "Project B",
       domain: "engineering",
-      year: 2024,
+      year: 2021,
+      period: "2021–2022",
       summary: "An engineering project.",
       links: [
         { label: "Repo", url: "https://example.com/repo" },
@@ -90,6 +91,7 @@ describe("projectsSchema", () => {
     if (result.success) {
       assert.equal(result.data.featured, true);
       assert.equal(result.data.status, "active");
+      assert.equal(result.data.period, "2021–2022");
     }
   });
 
