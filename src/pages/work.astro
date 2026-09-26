@@ -8,11 +8,11 @@ const selected = projects.filter((project) => project.data.featured === true);
 const other = projects.filter((project) => project.data.featured !== true);
 ---
 
-<BaseLayout title="Work" description="Research and tools for AI in development data.">
+<BaseLayout title="Work" description="Selected research and software projects.">
   <header class="page-intro">
     <p class="section-kicker">Research · Engineering · Open source</p>
     <h1>Work</h1>
-    <p>Projects that connect questions about development data with practical systems, methods, and tools.</p>
+    <p>Selected research and software, from information retrieval and evaluation to open-source systems.</p>
   </header>
 
   {projects.length === 0 ? (
