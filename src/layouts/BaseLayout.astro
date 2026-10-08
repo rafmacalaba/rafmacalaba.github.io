@@ -1,4 +1,5 @@
 ---
+import { existsSync, readFileSync } from "node:fs";
 import SiteNav from "../components/SiteNav.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import "../styles/global.css";
@@ -19,6 +20,15 @@ const {
 } = Astro.props;
 
 const fullTitle = title === siteConfig.name ? title : `${title} — ${siteConfig.name}`;
+
+// The bundle ships no Cache-Control and GitHub Pages answers with max-age=600, so without a version query
+// a deploy can serve the previous embed.js for ten minutes — long enough that a fixed bug stays visible.
+// The pack writes version.json before this build runs; the query changes whenever the SDK revision does.
+// The chunks embed.js imports are already named by hash, so the entry point is the only file to bust.
+const slmVersionFile = "public/portable-slm/version.json";
+const slmBundleQuery = existsSync(slmVersionFile)
+  ? `?v=${JSON.parse(readFileSync(slmVersionFile, "utf8")).gitSha ?? "dev"}`
+  : "";
 ---
 
 <!doctype html>
@@ -64,7 +74,7 @@ const fullTitle = title === siteConfig.name ? title : `${title} — ${siteConfig
         <>
           <div id="pslm-panel" class="pslm" data-pslm data-launcher="Ask this site" data-resize />
           <p data-pslm-note role="status" hidden />
-          <script is:inline type="module" src="/portable-slm/embed.js" />
+          <script is:inline type="module" src={`/portable-slm/embed.js${slmBundleQuery}`} />
         </>
       )
     }
