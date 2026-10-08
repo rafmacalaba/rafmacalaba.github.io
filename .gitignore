@@ -10,6 +10,9 @@ node_modules/
 # Build
 dist/
 
+# Companion assistant bundle and grounding document, assembled by scripts/pack-slm.mjs
+/public/portable-slm/
+
 # Astro
 .astro/
 

@@ -1,0 +1,25 @@
+{
+  "apiVersion": "pslm-host/1",
+  "model": "lfm2.5-2.6b-onnx-q4f16",
+  "app": {
+    "name": "Rafael Macalaba",
+    "version": "1.0.0"
+  },
+  "context": {
+    "app": {
+      "url": "/portable-slm/site.md",
+      "maxBytes": 8192
+    },
+    "credentials": "none"
+  },
+  "models": {
+    "available": [
+      "lfm2.5-2.6b-onnx-q4f16",
+      "lfm2.5-350m-onnx-q4f16"
+    ]
+  },
+  "tasks": [
+    "pslm.chat"
+  ],
+  "writeBack": false
+}

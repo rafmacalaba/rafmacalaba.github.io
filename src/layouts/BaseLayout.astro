@@ -56,6 +56,18 @@ const fullTitle = title === siteConfig.name ? title : `${title} — ${siteConfig
       <slot />
     </main>
     {chrome && <SiteFooter />}
+    {
+      /* On-device assistant (Portable SLM). Read-only and opt-in: the panel stays closed behind the
+         launcher until a visitor opens it, and the model is downloaded only if they install it.
+         The bundle is assembled into public/portable-slm at build time by scripts/pack-slm.mjs. */
+      chrome && (
+        <>
+          <div id="pslm-panel" class="pslm" data-pslm data-launcher="Ask this site" data-resize />
+          <p data-pslm-note role="status" hidden />
+          <script is:inline type="module" src="/portable-slm/embed.js" />
+        </>
+      )
+    }
     <script is:inline src="/scripts/theme.js"></script>
   </body>
 </html>

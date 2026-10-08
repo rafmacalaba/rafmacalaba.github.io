@@ -24,6 +24,25 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+
+      # The companion assistant. Its bundle is the SDK's, not this repository's, so it is built from the
+      # portable-slm source and packed into public/ before Astro runs: Astro copies public/ into dist/,
+      # which is what gets deployed. Nothing generated is committed.
+      # Pinned to a tag, not a branch: a change to the SDK's main must never be able to break a deploy
+      # here, and a deploy must be reproducible from what this file names. Bump the tag deliberately.
+      - uses: actions/checkout@v4
+        with:
+          repository: rafmacalaba/portable-slm
+          ref: v0.1.0-site
+          path: .slm
+      - run: npm ci
+        working-directory: .slm
+      - run: npm run build:embed
+        working-directory: .slm
+      - run: npm run slm:pack
+        env:
+          SLM_SRC: .slm
+
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "test": "node --experimental-strip-types --test tests/schema.test.ts tests/github.test.ts tests/xss-escape.test.ts tests/rss.test.ts tests/blog.test.ts"
+    "test": "node --experimental-strip-types --test tests/schema.test.ts tests/github.test.ts tests/xss-escape.test.ts tests/rss.test.ts tests/blog.test.ts",
+    "slm:pack": "node scripts/pack-slm.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
