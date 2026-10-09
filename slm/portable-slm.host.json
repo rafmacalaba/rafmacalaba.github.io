@@ -8,7 +8,8 @@
   "context": {
     "app": {
       "url": "/portable-slm/site.md",
-      "maxBytes": 8192
+      "maxBytes": 8192,
+      "kind": "content"
     },
     "credentials": "none"
   },
