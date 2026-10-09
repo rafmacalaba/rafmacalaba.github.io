@@ -85,7 +85,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       // The quality tier needs its weights before a question can be embedded at all. Wait for a click
       // rather than spending 181 MB on a page visit.
       if (tier === "quality") {
-        embedder ??= createEmbedder(assets);
+        embedder ??= createEmbedder({ assets });
         const state = await embedder.status("embeddinggemma-2-text-q4f16").catch(() => ({ state: "absent" }));
         if (state.state !== "installed") {
           say("Downloading the larger embedder (181 MB, once, cached). This is the tier's real cost.");
@@ -97,7 +97,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         }
       }
 
-      const embedderForTier = tier === "keyword" ? null : (embedder = embedder ?? createEmbedder(assets));
+      const embedderForTier = tier === "keyword" ? null : (embedder = embedder ?? createEmbedder({ assets }));
       const provider = createRetrievalContext({ manifest, base, embedder: embedderForTier });
       const ready = await provider.ready();
       // Both embedder tiers index in the background. Wait for the upgrade rather than for a fixed moment:
