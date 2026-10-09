@@ -78,11 +78,14 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
     async function run(tier) {
       say(`reading the ${tier} manifest…`);
-      const manifest = await (await fetch(MANIFESTS[tier])).json();
+      // loadConfig gives the validated manifest, the ONNX Runtime asset paths and the base directory in one
+      // call. Fetching the manifest by hand and constructing the embedder with no assets is what made the
+      // larger tier throw "Self-hosted ONNX Runtime wasm + mjs assets are required" after downloading 181 MB.
+      const { manifest, assets, base } = await mod.loadConfig(MANIFESTS[tier]);
       // The quality tier needs its weights before a question can be embedded at all. Wait for a click
       // rather than spending 181 MB on a page visit.
       if (tier === "quality") {
-        embedder ??= createEmbedder({});
+        embedder ??= createEmbedder(assets);
         const state = await embedder.status("embeddinggemma-2-text-q4f16").catch(() => ({ state: "absent" }));
         if (state.state !== "installed") {
           say("Downloading the larger embedder (181 MB, once, cached). This is the tier's real cost.");
@@ -94,12 +97,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         }
       }
 
-      const embedderForTier = tier === "keyword" ? null
-        : tier === "auto" ? (embedder = embedder ?? createEmbedder({}))
-        : (embedder = embedder ?? createEmbedder({}));
-      const provider = createRetrievalContext({
-        manifest, base: location.href, embedder: embedderForTier,
-      });
+      const embedderForTier = tier === "keyword" ? null : (embedder = embedder ?? createEmbedder(assets));
+      const provider = createRetrievalContext({ manifest, base, embedder: embedderForTier });
       const ready = await provider.ready();
       // Both embedder tiers index in the background. Wait for the upgrade rather than for a fixed moment:
       // two seconds is enough for 35 chunks at 1.5 ms and nowhere near enough for 20 chunks at 177 ms, which
