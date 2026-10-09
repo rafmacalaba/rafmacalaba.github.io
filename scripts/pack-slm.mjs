@@ -38,7 +38,7 @@ const withCorpus = (manifest) => ({
   context: { ...manifest.context, documents: corpus.documents },
   retrieval: { ...manifest.retrieval, corpusVersion: corpus.version },
 });
-for (const name of ["portable-slm", "keyword", "quality"]) {
+for (const name of ["portable-slm", "ternlight", "quality"]) {
   const manifest = withCorpus(JSON.parse(readFileSync(`slm/${name}.host.json`, "utf8")));
   writeFileSync(`${OUT}/${name}.host.json`, `${JSON.stringify(manifest, null, 2)}\n`);
   copyFileSync(`slm/${name}.host.json`, `${OUT}/${name}.source.json`);

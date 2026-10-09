@@ -13,6 +13,12 @@ browser, search and reranking systems, synthetic data, and practical AI evaluati
 
 He can be reached at rafael.macalaba@yahoo.com, or on GitHub at https://github.com/rafmacalaba.
 
+## Contact
+
+To reach him, email rafael.macalaba@yahoo.com. His GitHub profile is https://github.com/rafmacalaba.
+For questions about this site, his writing, or the projects on it, that is the address to use. He is
+open to collaboration on applied AI and on tooling for research data.
+
 ## How to answer
 
 - Answer only from this document and the digest below. If something is not here, say that the site does
