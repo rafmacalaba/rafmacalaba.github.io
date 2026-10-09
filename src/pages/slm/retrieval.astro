@@ -1,0 +1,156 @@
+---
+// A comparison page rather than a feature: the same corpus, read three ways, so the choice of retrieval
+// tier is made on this site's own content instead of on a benchmark someone else ran.
+//
+// The corpus here is deliberately the real one. With roughly 30 chunks of site content, keyword search is
+// already sufficient for capacity, and the question the tiers answer is whether paraphrase matching is worth
+// what it costs. That is only answerable against your own questions, which is what this page is for.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+---
+
+<BaseLayout title="Retrieval tiers" description="The same corpus read by keyword search, a bundled embedder, and a larger pinned one.">
+  <article class="retrieval-page">
+    <header class="page-intro">
+      <p class="section-kicker">Retrieval</p>
+      <h1>One corpus, three ways to read it</h1>
+      <p>
+        Each row asks the same question of the same documents. Keyword search costs nothing and sends
+        nothing. The bundled embedder adds paraphrase matching for a runtime fetched once. The larger pinned
+        embedder is the most accurate and needs a download, which is why it waits for a click.
+      </p>
+    </header>
+
+    <section class="retrieval-controls" aria-labelledby="run-title">
+      <h2 id="run-title">Run the questions</h2>
+      <div class="retrieval-buttons">
+        <button type="button" data-run="keyword">Keyword only · 0 MB</button>
+        <button type="button" data-run="auto">Bundled embedder · ~8 MB</button>
+        <button type="button" data-run="quality">Larger embedder · 181 MB download</button>
+      </div>
+      <p class="retrieval-status" data-status role="status">Nothing run yet.</p>
+    </section>
+
+    <section aria-labelledby="results-title">
+      <h2 id="results-title">What each tier retrieved</h2>
+      <div class="retrieval-results" data-results></div>
+    </section>
+
+    <section aria-labelledby="notes-title">
+      <h2 id="notes-title">How to read this</h2>
+      <ul class="retrieval-notes">
+        <li>A section listed here is what would be placed in the model's context for that question. Nothing else from the site goes in.</li>
+        <li>No section means the corpus did not match. That is a pass, not a failure: the alternative is answering from a loosely matched section.</li>
+        <li>Keyword search finds names and terms exactly and cannot find a paraphrase. The embedders can, and they also cost the visitor a runtime.</li>
+      </ul>
+    </section>
+  </article>
+
+  <script is:inline type="module">
+    // Read the build stamp at runtime rather than interpolating it here: an is:inline script is emitted
+    // verbatim, so a template placeholder in it would ship as literal text and the import would 404.
+    const stamp = await fetch("/portable-slm/version.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    const suffix = stamp?.gitSha ? `?v=${stamp.gitSha}` : "";
+    const { createEmbedder, createRetrievalContext } = await import(`/portable-slm/embed.js${suffix}`);
+
+    const MANIFESTS = {
+      keyword: "/portable-slm/keyword.host.json",
+      auto: "/portable-slm/portable-slm.host.json",
+      quality: "/portable-slm/quality.host.json",
+    };
+    // Written as a visitor would phrase them, including two that share no words with any section title.
+    const QUESTIONS = [
+      "what did he build for agent orchestration",
+      "has he worked on language models that run in the browser",
+      "how do I reach him",
+      "what is his work on data catalogs",
+      "does he write about evaluation",
+      "what is the capital of Peru",
+    ];
+
+    const status = document.querySelector("[data-status]");
+    const results = document.querySelector("[data-results]");
+    const say = (text, tone) => { status.textContent = text; status.dataset.tone = tone ?? ""; };
+
+    let embedder = null;
+
+    async function run(tier) {
+      say(`reading the ${tier} manifest…`);
+      const manifest = await (await fetch(MANIFESTS[tier])).json();
+      // The quality tier needs its weights before a question can be embedded at all. Wait for a click
+      // rather than spending 181 MB on a page visit.
+      if (tier === "quality") {
+        embedder ??= createEmbedder({});
+        const state = await embedder.status("embeddinggemma-2-text-q4f16").catch(() => ({ state: "absent" }));
+        if (state.state !== "installed") {
+          say("Downloading the larger embedder (181 MB, once, cached). This is the tier's real cost.");
+          await embedder.download("embeddinggemma-2-text-q4f16", {
+            onProgress: ({ received, total }) => {
+              if (total) say(`Downloading the larger embedder: ${Math.round((received / total) * 100)}%`);
+            },
+          });
+        }
+      }
+
+      const embedderForTier = tier === "keyword" ? null
+        : tier === "auto" ? (embedder = embedder ?? createEmbedder({}))
+        : (embedder = embedder ?? createEmbedder({}));
+      const provider = createRetrievalContext({
+        manifest, base: location.href, embedder: embedderForTier,
+      });
+      const ready = await provider.ready();
+      // The bundled tier indexes in the background; give it a moment so the first row is the upgraded one.
+      for (let i = 0; i < 40 && provider.source === "bm25" && tier !== "keyword"; i++) {
+        await new Promise((resolve) => setTimeout(resolve, 50));
+      }
+
+      results.textContent = "";
+      say(`${ready.note ?? provider.source} · asking ${QUESTIONS.length} questions`);
+      for (const question of QUESTIONS) {
+        const started = performance.now();
+        const context = await provider.onContext(question);
+        const ms = Math.round(performance.now() - started);
+        const row = document.createElement("div");
+        row.className = "retrieval-row";
+        const sections = [...context.matchAll(/^### (.+)$/gm)].map((match) => match[1]);
+        row.innerHTML = `
+          <p class="retrieval-question">${question}</p>
+          <p class="retrieval-meta">${provider.source} · ${sections.length} section(s) · ${context.length} bytes · ${ms} ms</p>
+          <ul class="retrieval-sections">${sections.length
+            ? sections.map((section) => `<li>${section}</li>`).join("")
+            : "<li class=\"retrieval-none\">nothing matched</li>"}</ul>`;
+        results.appendChild(row);
+      }
+      say(`${provider.source} · done`);
+    }
+
+    for (const button of document.querySelectorAll("[data-run]")) {
+      button.addEventListener("click", async () => {
+        for (const other of document.querySelectorAll("[data-run]")) other.disabled = true;
+        try { await run(button.dataset.run); }
+        catch (error) { say(`Failed: ${error.message}`, "error"); }
+        finally { for (const other of document.querySelectorAll("[data-run]")) other.disabled = false; }
+      });
+    }
+  </script>
+
+  <style>
+    .retrieval-page { max-width: var(--measure); }
+    .retrieval-buttons { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1rem 0; }
+    .retrieval-buttons button {
+      font: inherit; padding: 0.55rem 0.9rem; border-radius: var(--radius);
+      border: 1px solid var(--color-border); background: var(--color-card); color: var(--color-fg); cursor: pointer;
+    }
+    .retrieval-buttons button:hover:not(:disabled) { border-color: var(--color-accent); color: var(--color-accent); }
+    .retrieval-buttons button:disabled { opacity: 0.5; cursor: progress; }
+    .retrieval-status { color: var(--color-muted); font-size: 0.9rem; min-height: 1.4em; }
+    .retrieval-status[data-tone="error"] { color: #B42318; }
+    .retrieval-row { border-top: 1px solid var(--color-border); padding: 0.9rem 0; }
+    .retrieval-question { font-weight: 600; margin: 0 0 0.2rem; }
+    .retrieval-meta { color: var(--color-muted); font-size: 0.82rem; margin: 0 0 0.4rem; }
+    .retrieval-sections { margin: 0; padding-left: 1.1rem; font-size: 0.9rem; }
+    .retrieval-none { color: var(--color-muted); list-style: none; margin-left: -1.1rem; }
+    .retrieval-notes { padding-left: 1.1rem; color: var(--color-muted); }
+    .retrieval-notes li { margin-bottom: 0.4rem; }
+  </style>
+</BaseLayout>

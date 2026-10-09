@@ -24,7 +24,7 @@
   ],
   "writeBack": false,
   "retrieval": {
-    "embedder": "auto",
+    "embedder": "embeddinggemma-2-text-q4f16",
     "dims": 256,
     "alpha": 0.5,
     "topK": 5,
