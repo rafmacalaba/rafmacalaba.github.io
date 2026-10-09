@@ -24,11 +24,10 @@
   ],
   "writeBack": false,
   "retrieval": {
-    "embedder": "auto",
     "dims": 256,
     "alpha": 0.5,
     "topK": 5,
     "maxBytes": 6144,
-    "minSimilarity": 0.1
+    "embedder": "none"
   }
 }

@@ -54,8 +54,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     const { createEmbedder, createRetrievalContext } = await import(`/portable-slm/embed.js${suffix}`);
 
     const MANIFESTS = {
-      keyword: "/portable-slm/portable-slm.host.json",
-      auto: "/portable-slm/ternlight.host.json",
+      // One manifest per tier, and the labels have to match what each one declares:
+      // keyword is embedder "none", the default is the bundled embedder, quality is the pinned 181 MB one.
+      keyword: "/portable-slm/keyword.host.json",
+      auto: "/portable-slm/portable-slm.host.json",
       quality: "/portable-slm/quality.host.json",
     };
     // Written as a visitor would phrase them, including two that share no words with any section title.
