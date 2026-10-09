@@ -6,6 +6,11 @@
 // for the manifest. Retrieval then returns the two or three sections that match a question instead of a
 // pre-chewed summary of everything.
 //
+// Each document is the text itself. A trailing "Page: https://..." line used to name the source, and it made
+// `page` and `source` into query terms pointing at metadata: asked "what is this page about", retrieval
+// returned those tails and the model correctly reported that it had been given links and titles. The section
+// label already names the document, which is where provenance belongs.
+//
 // It also writes corpus.json: the document list and a content hash. The hash is the manifest's
 // corpusVersion, so an index is rebuilt when the content changes and not when it does not.
 //
@@ -16,8 +21,6 @@ import { join } from "node:path";
 import matter from "gray-matter";
 
 const OUT = "public/portable-slm/corpus";
-const SITE = "https://rafmacalaba.github.io";
-
 const isoDay = (value) => (value instanceof Date ? value.toISOString().slice(0, 10) : String(value).slice(0, 10));
 
 const readCollection = (dir) =>
@@ -45,7 +48,7 @@ const documents = [
   {
     path: "about.md",
     label: "about",
-    text: `${authored}\n\nSource: ${SITE}/about`,
+    text: authored,
   },
   ...projects.map((project) => ({
     path: `work/${project.slug}.md`,
@@ -56,7 +59,6 @@ const documents = [
       project.summary || "",
       project.body || "",
       project.links?.length ? `Links: ${project.links.map((link) => `${link.label} ${link.url}`).join(", ")}` : "",
-      `Page: ${SITE}/work#project-${project.slug}`,
     ].filter(Boolean).join("\n\n"),
   })),
   ...posts.map((post) => ({
@@ -67,13 +69,12 @@ const documents = [
       `Published ${isoDay(post.pubDate)}`,
       post.description || "",
       post.body || "",
-      `Page: ${SITE}/blog/${post.slug}`,
     ].filter(Boolean).join("\n\n"),
   })),
   ...(now ? [{
     path: "now.md",
     label: "now",
-    text: `# What he is working on now\n\n${now.body}\n\nPage: ${SITE}/now`,
+    text: `# What he is working on now\n\n${now.body}`,
   }] : []),
 ];
 

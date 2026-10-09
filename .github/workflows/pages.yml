@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: rafmacalaba/portable-slm
-          ref: v0.3.6-site
+          ref: v0.3.7-site
           path: .slm
       - run: npm ci
         working-directory: .slm

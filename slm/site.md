@@ -1,4 +1,4 @@
-# Grounding for the on-device assistant
+# About this site
 
 <!--
   This is the text the site's local assistant is allowed to answer from. It is public, so it must
