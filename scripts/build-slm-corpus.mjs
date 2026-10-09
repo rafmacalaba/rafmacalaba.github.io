@@ -44,12 +44,12 @@ const authored = readFileSync("slm/site.md", "utf8")
 const documents = [
   {
     path: "about.md",
-    label: "About",
+    label: "about",
     text: `${authored}\n\nSource: ${SITE}/about`,
   },
   ...projects.map((project) => ({
     path: `work/${project.slug}.md`,
-    label: `Project: ${project.title}`,
+    label: `work/${project.slug}`,
     text: [
       `# ${project.title}`,
       `${project.year}${project.period ? `, ${project.period}` : ""}${project.domain ? `, ${project.domain}` : ""}`,
@@ -61,7 +61,7 @@ const documents = [
   })),
   ...posts.map((post) => ({
     path: `writing/${post.slug}.md`,
-    label: `Writing: ${post.title}`,
+    label: `writing/${post.slug}`,
     text: [
       `# ${post.title}`,
       `Published ${isoDay(post.pubDate)}`,
@@ -72,7 +72,7 @@ const documents = [
   })),
   ...(now ? [{
     path: "now.md",
-    label: "What he is working on now",
+    label: "now",
     text: `# What he is working on now\n\n${now.body}\n\nPage: ${SITE}/now`,
   }] : []),
 ];
