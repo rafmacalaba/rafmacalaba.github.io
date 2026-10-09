@@ -101,9 +101,16 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         manifest, base: location.href, embedder: embedderForTier,
       });
       const ready = await provider.ready();
-      // The bundled tier indexes in the background; give it a moment so the first row is the upgraded one.
-      for (let i = 0; i < 40 && provider.source === "bm25" && tier !== "keyword"; i++) {
-        await new Promise((resolve) => setTimeout(resolve, 50));
+      // Both embedder tiers index in the background. Wait for the upgrade rather than for a fixed moment:
+      // two seconds is enough for 35 chunks at 1.5 ms and nowhere near enough for 20 chunks at 177 ms, which
+      // is why the larger tier used to report "bm25" and then answer at keyword quality.
+      if (tier !== "keyword") {
+        const started = performance.now();
+        while (provider.source === "bm25") {
+          if (performance.now() - started > 240000) break;
+          say(`${ready.note ?? "indexing"} … ${Math.round((performance.now() - started) / 1000)}s (first run embeds the corpus; later runs reuse the cache)`);
+          await new Promise((resolve) => setTimeout(resolve, 250));
+        }
       }
 
       results.textContent = "";
